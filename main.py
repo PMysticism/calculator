@@ -44,10 +44,10 @@ st.set_page_config(
 )
 
 # Optional: Top navigation using st.page_link
-left, mid, right = st.columns([50, 1, 1])
+left, mid, right = st.columns([9, 1, 1])
 
 with left:
-    col1, col2, col3, col4 = st.columns([1.2, 3, 3, 2.5])
+    col1, col2, col3, col4 = st.columns([1.3, 3, 3, 1.5])
     with col1:
         st.page_link("main.py", label= "Database")
 
