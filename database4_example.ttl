@@ -1311,3 +1311,1423 @@
         cs:validationMethod "Comparison of gas temperature, gas velocity, and particle velocity distributions against existing literature data (Yin et al.)" ;
         cs:validationTarget "Particle velocity and gas flow characteristics across different inlet pressures (2.5 MPa, 2.6 MPa, 3.0 MPa)"
     ] .
+
+
+<http://dx.doi.org/10.1002/adem.202200603> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1002/adem.202200603" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "Numerical Simulation of Cold Spray Bonding for CrFeNi Medium-Entropy Alloy" ;
+        cs:hasAuthor "Nima Pourakbar Zehtabi, Amir Ardeshiri Lordejani, Mario Guagliano, and Sara Bagherifard" ;
+        cs:hasJournal "Advanced Engineering Materials" ;
+        cs:hasPublicationYear "2022"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "false"^^xsd:boolean ;
+        cs:validationMethod "Comparison of simulation results (morphological evolution, critical velocity range, temperature localization, ejecta eruption) with experimental reports available in the literature for similar feedstock-substrate materials." ;
+        cs:validationTarget "Critical velocity reported in literature, morphological evolution/particle embedment, and ejecta eruption observed in experiments."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "ABAQUS/Explicit" ;
+        cs:modelsMaterial "CrFeNi MEA (Particle)" ;
+        cs:modelsMaterial "pure Al (Substrate)" ;
+
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Explicit finite element (FE) model, Lagrangian formulation" ;
+            cs:dimensionality "2D axisymmetric model and 3D model (quarter symmetry)" ;
+            cs:simulationFocus "Single particle impact (simulating the deposition of CrFeNi MEA, modeling metallurgical and mechanical interlocking)" ;
+
+            # 2.2 Approach Details (Parameters and software settings)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "Johnson–Cook model (describes flow stress as a function of strain hardening, strain-rate sensitivity, and thermal softening)" ;
+                cs:damageFailureModel "Johnson–Cook dynamic failure model (for material failure onset); Cohesive Zone Model (CZM) (for adhesive failure at interface); Scalar Stiffness Degradation (SDEG) parameter (used for bonding identification, minimum thresholds: 0.01 for particle, 0.02 for substrate; maximum degradation: 0.1 for particle, 0.4 for substrate impact zone)." ;
+                cs:meshRefinementTechnique "Element deletion based on output of damage model; Mesh size convergence analysis performed; Stiffness hourglass control selected for both particle and substrate." ;
+                cs:meshResolution "Particle: 0.4 μm (1/50dp); Impact zone on substrate: 0.5 μm (1/40dp)." ;
+                cs:particleBoundaryCondition "Particle shape assumed to be perfectly spherical with a diameter of 20 μm; Initial temperature set to 298 K; Impact velocities tested included 100, 300, 500, 700, and 1000 m s⁻¹." ;
+                cs:substrateBoundaryCondition "Bottom face fixed in all directions; Symmetry boundary condition considered (2D: Z-plane; 3D: X and Z planes); Initial temperature set to 298 K; Outmost element layer assigned 8-node linear, one-way infinite elements (CIN3D8)." ;
+                cs:contactInteractionMethod "Contact pair algorithm with hard contact model (2D); General contact strategy (3D); Friction considered with penalty formulation (coefficient of 0.3 used in 2D); 90% of plastic work and 100% of friction work transferred to heat."
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+
+            cs:predictedPhenomena "Particle rebounding (at velocities below 500 m s⁻¹)" ;
+            cs:predictedPhenomena "Bonding/Adhesion (initiated at 500 m s⁻¹ and above)" ;
+            cs:predictedPhenomena "Metallurgical and mechanical interlocking (particle pushed soft substrate down)" ;
+            cs:predictedPhenomena "Jetting took shape (at 500 and 700 m s⁻¹)" ;
+            cs:predictedPhenomena "Notable temperature increase at the substrate surface" ;
+            cs:predictedPhenomena "Substrate temperature reaching its melting point (916 K) at velocities above 500 m s⁻¹" ;
+            cs:predictedPhenomena "Ejecta eruption around the impact zone (due to substrate melting)" ;
+            cs:predictedPhenomena "Particle was flattened relatively (at 1000 m s⁻¹)" ;
+
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Critical Velocity (Approximate)" ;
+                cs:metricValue "500" ;
+                cs:metricUnit "m s⁻¹" ;
+                cs:atImpactVelocity "N/A (the determined velocity)" ;
+                cs:atImpactTemperature "298 K (Initial)"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum von Mises stress (Localized Contact)" ;
+                cs:metricValue "9.808e2" ;
+                cs:metricUnit "MPa" ;
+                cs:atImpactVelocity "700 m s⁻¹" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum von Mises stress (Distributed Adhesion)" ;
+                cs:metricValue "9.204e2" ;
+                cs:metricUnit "MPa" ;
+                cs:atImpactVelocity "1000 m s⁻¹" ;
+                cs:atImpactTemperature "N/A"
+            ]
+        ]
+    ] .
+
+<http://dx.doi.org/10.1007/BF00350268> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1007/BF00350268" ;
+    # 1. Paper Metadata
+    cs:hasMetadata [
+    a cs:Metadata ;
+    cs:hasTitle "A multi-material Eulerian formulation for the efficient solution of impact and penetration problems" ;
+    cs:hasAuthor "D. J. Benson" ;
+    cs:hasJournal "" ;
+    cs:hasPublicationYear "1994"^^xsd:gYear
+    ] ;
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+    a cs:ExperimentalValidation ;
+    cs:isExperimentConducted "false"^^xsd:boolean ;
+    cs:validationMethod "Numerical examples were benchmarked against existing numerical solutions (e.g., Lagrangian solution for Taylor bar) and existing experimental observations were referenced (e.g., void sheeting), but no new accompanying experimental study was conducted." ;
+    cs:validationTarget "Final configuration of Taylor bar impact (numerical comparison); Void growth and coalescence process; High velocity penetration profile."
+    ] ;
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+    a cs:ComputationalStudy ;
+    cs:usesSoftware "Raven" ;
+    cs:modelsMaterial "Solid materials (e.g., metal in Taylor bar, OFHC copper, plate material)" ;
+    cs:modelsMaterial "Null/Void material" ;
+    # 2.1 Numerical Approach
+    cs:hasNumericalApproach [
+    a cs:NumericalApproach ;
+    cs:approachType "Eulerian formulation; based on full Arbitrary Lagrangian-Eulerian (ALE) principles" ;
+    cs:dimensionality "2D (Examples include planar Taylor bar impact, 2D void growth and coalescence, 2D high velocity impact)" ;
+    cs:simulationFocus "Impact and penetration problems; Shock wave propagation; Large deformations (e.g., metal forming, ductile fracture, hypervelocity impact); Improving computational efficiency of Eulerian transport calculations" ;
+    # 2.2 Approach Details (Parameters and software settings)
+    cs:hasApproachDetail [
+    a cs:ApproachDetails ;
+    cs:constitutiveModel "J2 flow theory (general framework); Radial return algorithm (integration); Jaumann stress rate; Single crystal plasticity model (implemented in Raven); J2 perfect plasticity (used for Taylor bar); Johnson and Cook (1985) model (used for OFHC copper)" ;
+    cs:damageFailureModel "Ductile fracture via nucleation, growth, and coalescence of voids (handled naturally by Eulerian formulation); No failure criterion used in high velocity impact example (simple linear equation of state)" ;
+    cs:meshRefinementTechnique "Fixed Eulerian mesh (eliminates mesh distortion problems); Logically regular mesh used; Strategies to reduce advection cost (reducing frequency, short block strategy, sparse advection strategy)" ;
+    cs:meshResolution "Varies by example: 15 x 25 (coarse), 30 x 50, and 45 x 75 elements (Taylor bar); 60 x 100 elements (Void growth); 80 x 80 elements (High velocity impact)" ;
+    cs:particleBoundaryCondition "Not explicitly specified as particle/substrate, but materials flow through the mesh." ;
+    cs:substrateBoundaryCondition "Transmitting boundary condition (Void growth example); Nodes surrounded by void material velocity set to zero; Boundary elements used for imposing boundary conditions (Ghost zones)" ;
+    cs:contactInteractionMethod "Simple mixture model (for 'mixed' elements, assuming volume fraction constant and mean strain rate); Material interfaces calculated ab initio"
+    ]
+    ] ;
+    # 3. Modeling Outcome
+    cs:hasModelingOutcome [
+    a cs:ModelingOutcome ;
+    cs:predictedPhenomena "Efficient solution of impact and penetration problems for a broader range of applications" ;
+    cs:predictedPhenomena "Natural evolution of topology (e.g., perforation, fracture surface formation due to void coalescence)" ;
+    cs:predictedPhenomena "Maintenance of stable time step size independent of large deformations" ;
+    cs:predictedPhenomena "Diffusion of plastic strain along material boundaries (reduced by mesh refinement)" ;
+    cs:predictedPhenomena "Formation of fine ligaments of material (in high velocity impact due to lack of failure model)" ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Efficiency Improvement (Taylor Bar Impact)" ;
+    cs:metricValue "Factor of 10 reduction" ;
+    cs:metricUnit "Time steps" ;
+    cs:atImpactVelocity "Low velocity impact range (material velocity much lower than sound speed)" ;
+    cs:atImpactTemperature "N/A"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Optimal Strategy (Spatial Domain Mostly Void)" ;
+    cs:metricValue "2 to 3 times faster" ;
+    cs:metricUnit "Speedup" ;
+    cs:atImpactVelocity "N/A" ;
+    cs:atImpactTemperature "N/A"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Eulerian Step Cost Reduction (High Velocity Impact)" ;
+    cs:metricValue "700 seconds (standard) vs. 250 seconds (sparse advection)" ;
+    cs:metricUnit "CPU time on IBM 320/6000 RISC workstation" ;
+    cs:atImpactVelocity "3.0 km/sec" ;
+    cs:atImpactTemperature "N/A"
+    ]
+    ]
+    ] .
+
+<http://dx.doi.org/10.1007/s11666-010-9489-9> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1007/s11666-010-9489-9" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "Examination on the Calculation Method for Modeling the Multi-Particle Impact Process in Cold Spraying" ;
+        cs:hasAuthor "Shuo Yin, Xiao-fang Wang, Bao-peng Xu, and Wen-ya Li" ;
+        cs:hasJournal "" ;
+        cs:hasPublicationYear "2010"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "false"^^xsd:boolean ;
+        cs:validationMethod "Comparison of simulated particle deformation behavior, coating microstructure, and metal jetting morphology against experimental observations reported in previous studies." ;
+        cs:validationTarget "Typical microstructure of cold sprayed copper coating; Macro picture of the cross-section of a copper ball impacting a low carbon steel plate."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "LS-DYNA" ;
+        cs:modelsMaterial "Copper (Particle)" ;
+        cs:modelsMaterial "Copper (Substrate)" ;
+
+        # 2.1 Numerical Approach (Lagrangian Method)
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Lagrangian Method" ;
+            cs:dimensionality "2D (1/2 symmetric model, 2D plain strain) and 3D (1/4 symmetric model)" ;
+            cs:simulationFocus "Systematic examination of calculation method for multi-particle impact process in CS; Single particle impact" ;
+            # 2.2 Approach Details (Lagrangian)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "Johnson and Cook plasticity model; Von Mises plasticity model; Linear Mie-Gruneisen equation of state (EOS) for elastic behavior" ;
+                cs:meshRefinementTechnique "Mesh size convergence analysis (examination of meshing size effect); Element type variation examined" ;
+                cs:meshResolution "Examined sizes: 2.0 μm, 1.0 μm, 0.5 μm, 0.1 μm (for 2D models)" ;
+                cs:particleBoundaryCondition "Particle radius 10 μm; Initial velocity 500 m/s; Initial temperature 25 °C (298 K)" ;
+                cs:substrateBoundaryCondition "Fixed boundary condition applied to the bottom; Free boundary condition for others (3D case); X-displacement constrained for side walls (2D multi-impact)" ;
+                cs:contactInteractionMethod "Erode-surface-to-surface penalty formulation (3D); Automatic-2d-single-surface penalty formulation (2D)"
+            ]
+        ] ;
+
+        # 2.1 Numerical Approach (Eulerian Method)
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Eulerian Method" ;
+            cs:dimensionality "2D (1/2 symmetric model)" ;
+            cs:simulationFocus "Systematic examination of calculation method for multi-particle impact process in CS; Single particle impact; Multi-particle impact" ;
+            # 2.2 Approach Details (Eulerian)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "Johnson and Cook plasticity model; Von Mises plasticity model; Linear Mie-Gruneisen equation of state (EOS) for elastic behavior" ;
+                cs:meshRefinementTechnique "Fixed grid (avoids element distortion)" ;
+                cs:meshResolution "Basic mesh size of 0.1 μm" ;
+                cs:particleBoundaryCondition "Initial velocity 500 m/s; Initial temperature 25 °C (298 K)" ;
+                cs:substrateBoundaryCondition "Fixed boundary condition applied to the bottom and the axis of symmetry" ;
+                cs:contactInteractionMethod "Contact interface estimated by calculating volume fraction of different materials in a single element (No contact penalty formulation defined)"
+            ]
+        ] ;
+
+        # 2.1 Numerical Approach (SPH Method)
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Smoothed Particle Hydrodynamics (SPH) Method" ;
+            cs:dimensionality "3D" ;
+            cs:simulationFocus "Systematic examination of calculation method for multi-particle impact process in CS; Single particle impact; Multi-particle impact" ;
+            # 2.2 Approach Details (SPH)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "Johnson and Cook plasticity model; Von Mises plasticity model; Linear Mie-Gruneisen equation of state (EOS) for elastic behavior" ;
+                cs:meshRefinementTechnique "Mesh-free characteristic" ;
+                cs:meshResolution "Examined SPH particle weights: 2.61e-11 g, 1.75e-11 g, 1.23e-11 g, and 0.90e-11 g" ;
+                cs:particleBoundaryCondition "Initial velocity 500 m/s; Initial temperature 25 °C (298 K)" ;
+                cs:substrateBoundaryCondition "Whole 3D SPH models employed" ;
+                cs:contactInteractionMethod "Contact process calculated through detecting geometric proximity between a pair of SPH particles"
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Particle deformation behavior calculated by Eulerian method is more comparable to the experimental observation than that by Lagrangian method" ;
+            cs:predictedPhenomena "Eulerian method is superior to Lagrangian method for multi-particle impact simulation" ;
+            cs:predictedPhenomena "Lagrangian method results in particles separating and generating gaps inside the coating during multi-particle impact (rebound phenomenon)" ;
+            cs:predictedPhenomena "Eulerian method ensures bonding between particles and substrate without rebound phenomenon, providing more precise coating features" ;
+            cs:predictedPhenomena "SPH method provides a relatively reasonable result in particle deformation behavior" ;
+            cs:predictedPhenomena "SPH pure model shows particles adhering to the substrate without rebound" ;
+            cs:predictedPhenomena "Meshing size and element type significantly affect the resultant output obtained by Lagrangian method" ;
+            cs:predictedPhenomena "Weight of the independent SPH particle has limited effects on the resultant output"
+        ]
+    ] .
+
+<http://dx.doi.org/10.1007/s11666-025-02037-w> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1007/s11666-025-02037-w" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "Numerical Modeling of Liquid Cold Spray Process" ;
+        cs:hasAuthor "Mehdi Jadidi, Christian Moreau, Sylvain Desaulniers, Luc Pouliot, and Ali Dolatabadi" ;
+        cs:hasJournal "J Therm Spray Tech" ;
+        cs:hasPublicationYear "2025"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "false"^^xsd:boolean ;
+        cs:validationMethod "Comparison of simulated particle velocities near the centerline with experimental measurements (PIV system) reported in prior studies. Qualitative comparison of radial distribution trends against the experimental deposition footprint." ;
+        cs:validationTarget "Particle velocity (530 ± 60 m/s simulated vs. 500 ± 25 m/s experimental at 4 cm standoff distance); Radial distribution of particle velocity and temperature."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "ANSYS FLUENT release 2022-R2" ;
+        cs:modelsMaterial "Copper (Solid Particles)" ;
+
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Eulerian–Lagrangian approach (VOF model and DPM) combined with Lee’s evaporation–condensation model; CFD" ;
+            cs:dimensionality "2D axisymmetric" ;
+            cs:simulationFocus "Modeling flow dynamics (water, steam, solid particles) inside and outside the nozzle, including phase change, depressurization, and particle acceleration in the Liquid Cold Spray (LCS) process." ;
+
+            # 2.2 Approach Details (Parameters and software settings)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "VOF (Volume of Fluid) model for liquid–vapor phases; Lee’s evaporation–condensation model for mass transfer; RNG (Re-Normalization Group) k-e turbulence model with scalable wall function" ;
+                cs:damageFailureModel "Not applicable (flow dynamics study)" ;
+                cs:meshResolution "134,000 quadrilateral cells (2D axisymmetric)" ;
+                cs:particleBoundaryCondition "Uniform diameter of 150 μm; Initial temperature 300 K; Initial velocity 5 m/s; Escape through inlet/outlet; Reflection upon impacting nozzle wall." ;
+                cs:substrateBoundaryCondition "Pressure outlet boundary condition used outside the nozzle (no substrate modeled); No-slip boundary condition with fixed temperature of 300 K applied to nozzle walls." ;
+                cs:contactInteractionMethod "Discrete Phase Model (DPM) for particle tracking; Interaction of particles with continuous phase included; Drag force (spherical drag coefficient); Heat transfer (lumped heat capacity method, Ranz-Marshall correlation for Nusselt number); Mass transfer relaxation coefficient (r) tested in range 0.01 to 5 s⁻¹ (optimal range 0.05 to 0.1 s⁻¹)."
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Flash boiling and phase change upon rapid depressurization in the mixing chamber" ;
+            cs:predictedPhenomena "Formation of three-phase flow (liquid water, vapor, solid particles)" ;
+            cs:predictedPhenomena "Formation of pressure spikes/shock waves outside the nozzle, leading to vapor condensation" ;
+            cs:predictedPhenomena "Increase in particle velocity and temperature with increasing inlet liquid temperature (from 473 K to 573 K)" ;
+            cs:predictedPhenomena "Particle velocity and temperature are highest near the jet centerline and decrease radially outward" ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Particle Velocity (Near Centerline at 4 cm Standoff)" ;
+                cs:metricValue "530 ± 60" ;
+                cs:metricUnit "m/s" ;
+                cs:atImpactVelocity "530 m/s (average predicted value)" ;
+                cs:atImpactTemperature "473 K (Inlet Liquid Temperature)"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Particle Temperature (Near Centerline at 4 cm Standoff)" ;
+                cs:metricValue "400" ;
+                cs:metricUnit "K" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "473 K (Inlet Liquid Temperature)"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum Mixture Velocity (Inside Chamber)" ;
+                cs:metricValue "800" ;
+                cs:metricUnit "m/s" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "473 K (Inlet Liquid Temperature)"
+            ]
+        ]
+    ] .
+
+<https://doi.org/10.1016/j.actamat.2019.10.039> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.actamat.2019.10.039" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+    a cs:Metadata ;
+    cs:hasTitle "Mesoscale modeling of jet initiation behavior and microstructural evolution during cold spray single particle impact" ;
+    cs:hasAuthor "Sumit Suresh, Seok-Woo Lee, Mark Aindow, Harold D. Brody, Victor K. Champagne, Avinash M. Dongare" ;
+    cs:hasJournal "Acta Materialia" ;
+    cs:hasPublicationYear "2020"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+    a cs:ExperimentalValidation ;
+    cs:isExperimentConducted "false"^^xsd:boolean ;
+    cs:validationMethod "The study uses QCGD simulations to investigate microstructural features and jetting mechanisms that are often obscured by physical constraints in experiments; Results related to jetting initiation are compared to recent continuum models (FEM); Microstructure evolution and recrystallization behavior are discussed in consensus with some experimental cold spray works." ;
+    cs:validationTarget "Jetting mechanisms (specifically distinguishing between pressure wave driven vs. ASI); Final splat microstructures and evidence of recrystallization."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+    a cs:ComputationalStudy ;
+    cs:usesSoftware "Quasi-coarse-grained dynamics (QCGD) framework" ;
+    cs:modelsMaterial "Pure aluminum (Al) (Particle)" ;
+    cs:modelsMaterial "Pure aluminum (Al) (Substrate)" ;
+
+    # 2.1 Numerical Approach
+    cs:hasNumericalApproach [
+    a cs:NumericalApproach ;
+    cs:approachType "Quasi-coarse-grained dynamics (QCGD), which extends classical Molecular Dynamics (MD) simulations to mesoscales" ;
+    cs:dimensionality "3D (implied by system dimensions and Voronoi tessellation)" ;
+    cs:simulationFocus "Single particle impact; Mechanisms of jet initiation; Mesoscale microstructural evolution (e.g., recrystallization, planar defects)" ;
+
+    # 2.2 Approach Details (Parameters and software settings)
+    cs:hasApproachDetail [
+    a cs:ApproachDetails ;
+    cs:constitutiveModel "Embedded Atom Method (EAM) interatomic potential for pure aluminum; Energetics of R-atoms defined using L512 scaling relationships" ;
+    cs:damageFailureModel "Not explicitly used (jetting defined as outward flow rather than material ejection/fragmentation)" ;
+    cs:meshRefinementTechnique "L512 scaling (one coarse unit cell represents 512 regular fcc unit cells in each dimension); Total system size of ~60 Million R-atoms" ;
+    cs:meshResolution "Average grain size of 10 μm (for both particle and substrate, created using Voronoi tessellation)" ;
+    cs:particleBoundaryCondition "Polycrystalline Al particle; 20 μm diameter; Initial particle temperature (T_p) ranged from ~165 K to ~530 K; Impact velocities tested ranged from 700 m/s to 1600 m/s (main analysis focused on 700 m/s and 1300 m/s)" ;
+    cs:substrateBoundaryCondition "Polycrystalline Al substrate cube with an edge length of 50 μm; Equilibrated at room temperature (300 K); Damping boundary conditions implemented at the edges; Impact direction in the Z direction (perpendicular to the substrate surface)" ;
+    cs:contactInteractionMethod "Metallurgical bond formation (systems modeled are 'clean', devoid of oxide layer/roughness/porosity); Contact modeled via QCGD interactions based on EAM potential"
+    ]
+    ] ;
+
+    # 3. Modeling Outcome
+    cs:hasModelingOutcome [
+    a cs:ModelingOutcome ;
+    cs:predictedPhenomena "Jetting (initiation of outward flow of material at the particle/substrate interface periphery); Jetting is observed when the compressive shock wave interacts with the edge" ;
+    cs:predictedPhenomena "Localized softening of the metal in the particle/substrate edge region" ;
+    cs:predictedPhenomena "Significant release/drop of pressure in the particle and substrate after jet initiation" ;
+    cs:predictedPhenomena "Recrystallization (formation of new 'small' grains in the range of 2–4 μm) at the interface, observed at 50 ns" ;
+    cs:predictedPhenomena "Grain sharing between the particle and substrate at the interface" ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Maximum Compressive Pressure (Jetting case)" ;
+    cs:metricValue "11" ;
+    cs:metricUnit "GPa" ;
+    cs:atImpactVelocity "1300 m/s" ;
+    cs:atImpactTemperature "~165 K"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Maximum Compressive Pressure (No Jetting case)" ;
+    cs:metricValue "8" ;
+    cs:metricUnit "GPa" ;
+    cs:atImpactVelocity "700 m/s" ;
+    cs:atImpactTemperature "~165 K"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Peak Temperature at Interface Edge (Jetting case)" ;
+    cs:metricValue "~1000" ;
+    cs:metricUnit "K" ;
+    cs:atImpactVelocity "1300 m/s" ;
+    cs:atImpactTemperature "~165 K (Particle)"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Jet Initiation Time" ;
+    cs:metricValue "~2.9" ;
+    cs:metricUnit "ns" ;
+    cs:atImpactVelocity "1300 m/s" ;
+    cs:atImpactTemperature "~165 K (Particle)"
+    ]
+    ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.apsusc.2009.04.135> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.apsusc.2009.04.135" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+    a cs:Metadata ;
+    cs:hasTitle "Some aspects on 3D numerical modeling of high velocity impact of particles in cold spraying by explicit finite element analysis" ;
+    cs:hasAuthor "Wen-Ya Li, Wei Gao" ;
+    cs:hasJournal "Applied Surface Science" ;
+    cs:hasPublicationYear "2009"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+    a cs:ExperimentalValidation ;
+    cs:isExperimentConducted "false"^^xsd:boolean ;
+    cs:validationMethod "Comparison of simulation results (compression ratio, flattening ratio, and critical velocity) with existing experimental reports and previous numerical studies available in the literature." ;
+    cs:validationTarget "Compression ratio (Rc); Flattening ratio (Rf); Critical velocity; Deformation morphology."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+    a cs:ComputationalStudy ;
+    cs:usesSoftware "ABAQUS/Explicit" ;
+    cs:modelsMaterial "OFHC Copper (Particle and Substrate)" ;
+    cs:modelsMaterial "1100-H12 Aluminum Alloy (Particle and Substrate)" ;
+
+    # 2.1 Numerical Approach
+    cs:hasNumericalApproach [
+    a cs:NumericalApproach ;
+    cs:approachType "Explicit finite element analysis (FEA); Lagrangian formulation" ;
+    cs:dimensionality "3D model; 1/4 symmetric model" ;
+    cs:simulationFocus "Single particle impact behavior in cold spraying; Deformation behavior; Estimation of critical velocity." ;
+
+    # 2.2 Approach Details (Parameters and software settings)
+    cs:hasApproachDetail [
+    a cs:ApproachDetails ;
+    cs:constitutiveModel "Johnson and Cook (JC) plasticity model; Von Mises plasticity model" ;
+    cs:damageFailureModel "Johnson and Cook damage model (Johnson-Cook dynamic failure model); Element deletion (when damage parameter exceeds 1); Damage evolution specified in exponential form." ;
+    cs:meshRefinementTechnique "Material damage (element deletion) was the primary technique used to cope with excessive element distortion; Arbitrary Lagrangian Eulerian (ALE) adaptive meshing and Distortion control were also examined." ;
+    cs:meshResolution "Default: 1/40dp (0.5 \u03bcm for a 20 \u03bcm particle); 1/20dp (1 \u03bcm for a 20 \u03bcm particle) was also examined." ;
+    cs:particleBoundaryCondition "Particle diameters examined: 20 \u03bcm (default) and 80 \u03bcm; Initial temperature (To) of particle is 25 \u00b0C; Impact velocity varied (e.g., 200 m/s to 800 m/s)." ;
+    cs:substrateBoundaryCondition "Substrate was modeled as a cylinder; Radius and height were 4 and 3 times larger than particle radius, respectively; 1/4 symmetric model used; Initial temperature (To) of substrate is 25 \u00b0C." ;
+    cs:contactInteractionMethod "Surface-to-surface contact (Explicit) formulation with nodal erosion; Simple Coulomb friction model used; Default Coefficient of friction (COF): 0.2 (0 and 0.5 were also examined); Coupled thermal\u2013mechanical analysis (Dynamic-Temperature-Displacement-Explicit procedure) used; 90% of plastic work and 100% friction work dissipated as heat."
+    ]
+    ] ;
+
+    # 3. Modeling Outcome
+    cs:hasModelingOutcome [
+    a cs:ModelingOutcome ;
+    cs:predictedPhenomena "Intensive plastic deformation concentrated at the narrow interfacial region" ;
+    cs:predictedPhenomena "High strain rate (10^8 to 10^9 1/s) achieved" ;
+    cs:predictedPhenomena "Significant temperature rise in the interface region due to localization of plastic deformation" ;
+    cs:predictedPhenomena "Element deletion occurs when impact velocity is not less than 250 m/s (for 20 \u03bcm Cu particle)" ;
+    cs:predictedPhenomena "Particle penetration into the substrate observed (velocity higher than 400 m/s)" ;
+    cs:predictedPhenomena "Impact erosion occurs at high impact velocity" ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Critical Velocity (Estimated onset velocity for element deletion) for 20 \u03bcm Cu particle" ;
+    cs:metricValue "230" ;
+    cs:metricUnit "m/s" ;
+    cs:atImpactVelocity "N/A (the determined velocity)" ;
+    cs:atImpactTemperature "25 \u00b0C (Initial)"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Critical Velocity (Estimated onset velocity for element deletion) for 80 \u03bcm Cu particle" ;
+    cs:metricValue "190" ;
+    cs:metricUnit "m/s" ;
+    cs:atImpactVelocity "N/A (the determined velocity)" ;
+    cs:atImpactTemperature "25 \u00b0C (Initial)"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Critical Velocity (Estimated onset velocity for element deletion) for 20 \u03bcm Al1100 particle" ;
+    cs:metricValue "350" ;
+    cs:metricUnit "m/s" ;
+    cs:atImpactVelocity "N/A (the determined velocity)" ;
+    cs:atImpactTemperature "25 \u00b0C (Initial)"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Maximum Temperature Rise (Localized Contact Interface) for 20 \u03bcm Cu particle" ;
+    cs:metricValue "146" ;
+    cs:metricUnit "\u00b0C" ;
+    cs:atImpactVelocity "800 m/s" ;
+    cs:atImpactTemperature "25 \u00b0C (Initial)"
+    ]
+    ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.ijheatmasstransfer.2023.124817> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.ijheatmasstransfer.2023.124817" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+    a cs:Metadata ;
+    cs:hasTitle "A novel cold spray process flow technique - a numerical investigation" ;
+    cs:hasAuthor "Kamil Kowalski, Przemysław Błasiak, Sławomir Pietrowicz" ;
+    cs:hasJournal "International Journal of Heat and Mass Transfer" ;
+    cs:hasPublicationYear "2024"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+    a cs:ExperimentalValidation ;
+    cs:isExperimentConducted "false"^^xsd:boolean ;
+    cs:validationMethod "Numerical model was validated against prior literature (Yin et al. [48]) by recreating the geometry and comparing resulting distributions of gas temperature, gas velocity, and particle velocity." ;
+    cs:validationTarget "Gas velocity distributions along the nozzle axis; Particle velocities; Temperature distributions (for pressures 2.5 MPa, 2.6 MPa, and 3 MPa)."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+    a cs:ComputationalStudy ;
+    cs:usesSoftware "Ansys Fluent" ;
+    cs:modelsMaterial "Copper (Particle)" ;
+    cs:modelsMaterial "Air (Working Fluid)" ;
+    # 2.1 Numerical Approach
+    cs:hasNumericalApproach [
+    a cs:NumericalApproach ;
+    cs:approachType "CFD (Computational Fluid Dynamics); Discrete Phase Model (DPM); RNG k-epsilon turbulence model" ;
+    cs:dimensionality "3D" ;
+    cs:simulationFocus "Particle deposition efficiency; Gas and particle flow dynamics for three different nozzle inlet configurations (Basic, Vortex, Combined); High Pressure Cold Spray (HPCS) process." ;
+    # 2.2 Approach Details (Parameters and software settings)
+    cs:hasApproachDetail [
+    a cs:ApproachDetails ;
+    cs:constitutiveModel "Not explicitly defined (CFD analysis focused on flow and particle kinematics)." ;
+    cs:damageFailureModel "Not explicitly defined (Particle sticking determined by critical velocity criterion)." ;
+    cs:meshRefinementTechnique "Mesh independence study performed; Higher mesh density used in the nozzle throat and outlet regions due to rapid parameter changes and shock wave phenomena." ;
+    cs:meshResolution "Basic method: 211,233 tetrahedral elements; Vortex/Combined methods: 222,620 tetrahedral elements (Average skewness 0.23)." ;
+    cs:particleBoundaryCondition "Spherical copper particles; Diameter of 20 μm; Particle injection temperature 298 K; Mass flow rate 0.00083 kg/s." ;
+    cs:substrateBoundaryCondition "Accretion/Sticking occurs if particle velocity exceeds the critical velocity; Otherwise, an elastic rebound is assumed; Ambient pressure 0.101 MPa at the outlet." ;
+    cs:contactInteractionMethod "One-way coupling model (for solid-gas interaction); Critical velocity criterion adopted [49]; Equations (9) and (10) implemented via C programming language UDF (User Defined Function)."
+    ]
+    ] ;
+
+    # 3. Modeling Outcome
+    cs:hasModelingOutcome [
+    a cs:ModelingOutcome ;
+    cs:predictedPhenomena "Combined method gives the highest accretion rate values." ;
+    cs:predictedPhenomena "Vortex method performs the worst, resulting in particle dispersion due to centrifugal force." ;
+    cs:predictedPhenomena "In Basic and Combined methods, the spray pattern forms a cone (resembling a Gaussian distribution) with highest particle concentration in the central part." ;
+    cs:predictedPhenomena "Supersonic flow leads to oblique shock waves and Mach cones at the nozzle outlet." ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Maximum Accretion Rate (Combined Method)" ;
+    cs:metricValue "33.6" ;
+    cs:metricUnit "kg/m^2" ;
+    cs:atImpactVelocity "N/A (Calculated over 0.05 seconds)" ;
+    cs:atImpactTemperature "N/A"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Maximum Accretion Rate (Basic Method)" ;
+    cs:metricValue "18.1" ;
+    cs:metricUnit "kg/m^2" ;
+    cs:atImpactVelocity "N/A (Calculated over 0.05 seconds)" ;
+    cs:atImpactTemperature "N/A"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Maximum Accretion Rate (Vortex Method)" ;
+    cs:metricValue "10.7" ;
+    cs:metricUnit "kg/m^2" ;
+    cs:atImpactVelocity "N/A (Calculated over 0.05 seconds)" ;
+    cs:atImpactTemperature "N/A"
+    ]
+    ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.ijthermalsci.2023.108732> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.ijthermalsci.2023.108732" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "Exploring thermal dynamics and porosity of cold-sprayed Ti-6Al-4V coatings on Al6061-T6 substrates: A pulsed thermography and numerical modeling approach" ;
+        cs:hasAuthor "Sreedhar Unnikrishnakurup, Zheng Zhang, Debbie Hwee Leng Seng, Zhi-qian Zhang, Jisheng Pan, Vinod Kumar, Jonathan Zheng, Carlos Manzano, Andrew Ngo" ;
+        cs:hasJournal "International Journal of Thermal Sciences" ;
+        cs:hasPublicationYear "2024"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "true"^^xsd:boolean ;
+        cs:validationMethod "The congruence between empirical findings and simulation data affirmed the effectiveness of the applied methodology." ;
+        cs:validationTarget "Effective thermal diffusivity (comparison of simulation, experiment, and analytical EMT model) and thermal decay curves."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "COMSOL Multiphysics" ;
+        cs:modelsMaterial "Ti-6Al-4V (Ti64) coating (Porous structure modeled as air domains)" ;
+        cs:modelsMaterial "Al6061-T6 (Substrate)" ;
+
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Finite Element Method (FEM) model, Heat transfer physics" ;
+            cs:dimensionality "2D" ;
+            cs:simulationFocus "Simulation of transient heat transfer phenomena during pulsed thermography; evaluation of effective thermal diffusivity based on genuine pore morphology." ;
+
+            # 2.2 Approach Details (Parameters and software settings)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "N/A (Heat transfer simulation based on Eq. 9)" ;
+                cs:damageFailureModel "N/A (Thermal modeling)" ;
+                cs:meshRefinementTechnique "A fine mesh is utilized for the top surface of the sample to accommodate the initial steep temperature gradient." ;
+                cs:meshResolution "Temporal resolution of 5 ms adopted for the transient analysis spanning a 5 s duration." ;
+                cs:particleBoundaryCondition "Instantaneous boundary heat flux applied to the upper boundary, modeled as the temporal pulse shape of Xe-flash lamps (exponential decay exp(-2t/τ)); Pores modeled as air domains." ;
+                cs:substrateBoundaryCondition "A convective heat transfer coefficient of h = 5 W/(m2 K)−1 is employed to model the convective heat transfer on both the top and bottom boundaries; Ambient temperature set to Tamb = 293.15 K; Initial conditions T(x, y, 0) = Tamb." ;
+                cs:contactInteractionMethod "Internal boundaries of the pores are assumed to have a continuous boundary condition for heat flow, governed by the effusivity values of the individual materials."
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Transient heat diffusion phenomena in the porous coating." ;
+            cs:predictedPhenomena "Heat flux accumulation between adjacent pores." ;
+            cs:predictedPhenomena "Directional formation of porosity channels the heat flow in the direction of the spray angle." ;
+            cs:predictedPhenomena "Increased porosity slowed down the heat diffusion rate." ;
+
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Base Thermal Diffusivity (Bulk Ti64)" ;
+                cs:metricValue "2.88e-6" ;
+                cs:metricUnit "m2/s" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Effective Thermal Diffusivity (FEM Simulation, S4, 90°)" ;
+                cs:metricValue "2.84e-6" ;
+                cs:metricUnit "m2/s" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Effective Thermal Diffusivity (FEM Simulation, S3, 70°)" ;
+                cs:metricValue "2.83e-6" ;
+                cs:metricUnit "m2/s" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Effective Thermal Diffusivity (FEM Simulation, S2, 60°)" ;
+                cs:metricValue "2.65e-6" ;
+                cs:metricUnit "m2/s" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Effective Thermal Diffusivity (FEM Simulation, S1, 50°)" ;
+                cs:metricValue "1.92e-6" ;
+                cs:metricUnit "m2/s" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ]
+        ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.jmrt.2024.01.204> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.jmrt.2024.01.204" ;
+    
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "3D analysis of gas flow behavior and particle acceleration characteristics in cold spray additive manufacturing based on non-axisymmetric numerical models" ;
+        cs:hasAuthor "Wenpeng Wan, Wenya Li, Dong Wu, Zhengmao Zhang, Bo Ning" ;
+        cs:hasJournal "Journal of Materials Research and Technology" ;
+        cs:hasPublicationYear "2024"^^xsd:gYear
+    ] ;
+    
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "true"^^xsd:boolean ;
+        cs:validationMethod "Cold spraying experiments were conducted to verify numerical simulation results regarding optimal spray gun parameters, specifically comparing clogging behavior for two sets of parameters (Cl=190 mm, Pl=10 mm, Di1=1 mm vs. Cl=190 mm, Pl=40 mm, Di1=1 mm)." ;
+        cs:validationTarget "Alleviation of nozzle clogging; Successful preparation of deposits; Validation of particle backflow phenomenon (evidenced by the formation of a small, unconsolidated object at the end of the powder injector)."
+    ] ;
+    
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "FLUENT" ;
+        cs:modelsMaterial "Nitrogen (Gas source)" ;
+        cs:modelsMaterial "Spherical aluminum (Al) particles (Discrete phase)" ;
+        
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "3D numerical model; Gas-solid two-phase flow model; Density-based implicit solver; RNG k-ε turbulent model; Discrete Phase Modeling (DPM)" ;
+            cs:dimensionality "3D numerical model (Half model used owing to good symmetry of the XY plane)" ;
+            cs:simulationFocus "Analysis of gas flow field distribution and particle acceleration behaviors; Accommodating effects of pre-chamber length (Cl), length difference between pre-chamber and powder injector (Pl), and inner diameter of powder injector (Di1); Investigating non-axisymmetric gas arrangement (powder carrier gas at 45° from main working gas)." ;
+            
+            # 2.2 Approach Details (Parameters and software settings)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "Ideal gas law (for supersonic, compressible fluid); Segmented polynomial (for specific heat capacity of gas); Sutherland law (for gas viscosity variation versus temperature)" ;
+                cs:damageFailureModel "Particle reflection (unless otherwise stated) after hitting the wall; Reflection coefficients in normal and tangent directions set to 1.0" ;
+                cs:meshRefinementTechnique "Grids near the walls optimized for gradient change; Enhanced wall function chosen for fluid near the wall; Mesh independence verification performed" ;
+                cs:meshResolution "Around 6 to 8 million meshes (hexahedral type)" ;
+                cs:particleBoundaryCondition "Spherical Al particles; Initial temperature 300 K; Initial velocity 10 m/s; Particle size distribution conforming to Rosin-Rammer rule (Min: 5 μm, Max: 60 μm, Avg: 30 μm); Random walking model (DRW) activated (20 attempts, time scale constant 0.15)" ;
+                cs:substrateBoundaryCondition "Distance from spray gun exit to substrate fixed at 30 mm; Pressure inlet for powder carrier gas (3.0 MPa, 300 K); Pressure inlet for main working gas (2.9 MPa, 723 K); Pressure outlet (0.1 MPa, 300 K); No-slip boundary condition activated" ;
+                cs:contactInteractionMethod "Particle-wall interaction specified as reflection or capture (used for specific comparative visualization of particle backflow)"
+            ]
+        ] ;
+        
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Gas flow field distribution and particle accelerating behaviors intimately depend on Pl and Di1, showing scarce correlation with Cl" ;
+            cs:predictedPhenomena "Particle backflow occurs due to gas vortex generated near the powder injector, augmenting the possibility of particles colliding with the wall and amplifying clogging risk" ;
+            cs:predictedPhenomena "Negative influence of gas vortex minimized by adoption of small Pl (e.g., 10 mm)" ;
+            cs:predictedPhenomena "Particles with too small diameters (e.g., 5 μm) are not recommended to avoid particle backflow" ;
+            cs:predictedPhenomena "Increase of Pl enables more uniform temperature distribution of mixed gas and remarkable improvement in particle preheating effect" ;
+            cs:predictedPhenomena "Particle impact range is not symmetric about the Y-axis but favors impacting near the center of the substrate" ;
+            cs:predictedPhenomena "Average particle impact velocity and temperature both decrease with Di1" ;
+            
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum probability of particles colliding with walls (Case 90–70)" ;
+                cs:metricValue "Exceeding 25" ;
+                cs:metricUnit "%" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum probability of particles colliding with walls (Case Di1=0.5 mm)" ;
+                cs:metricValue "Exceeding 20" ;
+                cs:metricUnit "%" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Probability of particles colliding with walls (Optimal Di1)" ;
+                cs:metricValue "Around 5" ;
+                cs:metricUnit "%" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Particle collision probability vs. diameter (Cl=140 mm, Pl=40 mm)" ;
+                cs:metricValue "16 (5 μm) to 3 (60 μm)" ;
+                cs:metricUnit "%" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ]
+        ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.jmrt.2025.07.172> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.jmrt.2025.07.172" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "Numerical evaluation of Ni–Al2O3 particles deposition during cold spraying" ;
+        cs:hasAuthor "Abba A. Abubakar, Khaled S. Al-Athel, Nestor Ankah, S. Sohail Akhtar, Abul Fazal M. Arif" ;
+        cs:hasJournal "Journal of Materials Research and Technology" ;
+        cs:hasPublicationYear "2025"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "true"^^xsd:boolean ;
+        cs:validationMethod "Comparison of simulated particle deformation characteristics (e.g., splat geometry, flattening ratio) with experimental observations, comparison with results from the Arbitrary Lagrangian-Eulerian (ALE) scheme, and evaluation of resulting coating properties (microhardness, scratch resistance) synthesized under optimal conditions predicted by simulation." ;
+        cs:validationTarget "Particle splat diameter/thickness; Flattening ratio; Coating microstructure (optical micrograph); Microindentation force-displacement curve (hardness); Tangential force variation and acoustic emission data from scratch tests."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "ABAQUS/CAE (Explicit-dynamic FEA scheme)" ;
+        cs:modelsMaterial "Ni (Particle)" ;
+        cs:modelsMaterial "Al2O3 (Particle)" ;
+        cs:modelsMaterial "SS304 stainless steel (Substrate)" ;
+
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Hybrid SPH-FEA (Smooth Particle Hydrodynamics for particles, Lagrangian Finite Element Method for substrate/coating)" ;
+            cs:dimensionality "3D" ;
+            cs:simulationFocus "Single particle impact; Multi-particle impact (Ni-Al2O3 blend); Interparticle interactions; Thermo-mechanical deformation; Temperature distribution; Residual stress evolution." ;
+
+            # 2.2 Approach Details (Parameters and software settings)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "Johnson–Cook model (JC) (for Ni and SS304); Johnson and Holmquist constitutive model (JH-2) (for Al2O3)" ;
+                cs:damageFailureModel "JH-2 brittle failure model (for Al2O3); Damage parameter (D) calculation used for fracture strain of particles" ;
+                cs:meshRefinementTechnique "Hybrid approach mitigating element distortion by using meshless SPH for particles and FE for substrate; Grid-independent tests performed; Explicit time-stepping scheme within Abaqus/Explicit used for stable time steps." ;
+                cs:meshResolution "Point cloud density of 94,021 points per 20 μm particle." ;
+                cs:particleBoundaryCondition "Particle Size: 20–60 μm; Impact Velocity: 250–1000 m/s; Impact Temperature: 300–600 K; Shapes: Spherical, Rod-like, Flake-like, Dodecahedron, Coated, Hollow; Configurations: Mono-particle, Double concentric, Double eccentric, Triple concentric, Triple eccentric, Triple mixed." ;
+                cs:substrateBoundaryCondition "SS304 substrate (100 mm × 100 mm x 160 mm); Substrate fixed in space; Ambient temperature (300 K) assigned." ;
+                cs:contactInteractionMethod "Ghost particle method; Hard contact formulation (normal contact); Penalty method (Coulomb frictional forces); Inelastic heat dissipation index β = 0.9."
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Flattening ratio of Ni particles increases with temperature, decreasing diameter, and velocity (≤750 m/s), but decreases at higher velocities (>750 m/s) due to embedment." ;
+            cs:predictedPhenomena "Al2O3 particles undergo partial fracturing and higher penetration depth, often resulting in rebound." ;
+            cs:predictedPhenomena "Al2O3 particles exert a compressive/peening effect on underlying Ni particles, enhancing densification and localized plastic deformation rather than lateral spreading." ;
+            cs:predictedPhenomena "High-aspect-ratio particles penetrate deeper into the substrate." ;
+            cs:predictedPhenomena "Localized temperature increase at the particle–substrate interface (up to 800–1000 K for high velocity/temperature Ni impacts)." ;
+            cs:predictedPhenomena "Compressive residual stresses are dominant in the core, while tensile residual stresses form near particle splat edges and free surfaces." ;
+
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Flattening Ratio (e) - Ni Particle (Single, 20 μm)" ;
+                cs:metricValue "0.41" ;
+                cs:metricUnit "dimensionless" ;
+                cs:atImpactVelocity "500 m/s" ;
+                cs:atImpactTemperature "300 K"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Flattening Ratio (e) - Ni Particle (Triple Concentric Max)" ;
+                cs:metricValue "0.78" ;
+                cs:metricUnit "dimensionless" ;
+                cs:atImpactVelocity "500 m/s" ;
+                cs:atImpactTemperature "300 K"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum Compressive Stress (Ni particle at interface)" ;
+                cs:metricValue "750" ;
+                cs:metricUnit "MPa" ;
+                cs:atImpactVelocity "500 m/s" ;
+                cs:atImpactTemperature "300 K"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum Tensile Residual Stress (Near particle edges)" ;
+                cs:metricValue "1200" ;
+                cs:metricUnit "MPa" ;
+                cs:atImpactVelocity "N/A (Residual state)" ;
+                cs:atImpactTemperature "N/A (Residual state)"
+            ]
+        ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.surfcoat.2020.125981> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.surfcoat.2020.125981" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+    a cs:Metadata ;
+    cs:hasTitle "A modified Johnson-Cook material model with strain gradient plasticity consideration for numerical simulation of cold spray process" ;
+    cs:hasAuthor "Rohan Chakrabarty, Jun Song" ;
+    cs:hasJournal "Surface & Coatings Technology" ;
+    cs:hasPublicationYear "2020"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+    a cs:ExperimentalValidation ;
+    cs:isExperimentConducted "false"^^xsd:boolean ;
+    cs:validationMethod "Comparison of simulated deformation behaviors (stress profiles, temperature evolution, splat shape) from different constitutive models against experimental results extracted from existing literature." ;
+    cs:validationTarget "Experimental stress-strain rate data; particle splat width, splat height, and flattening ratio (FR); deformed particle morphology."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+    a cs:ComputationalStudy ;
+    cs:usesSoftware "ABAQUS/Explicit" ;
+    cs:modelsMaterial "Copper (Particle/Substrate)" ;
+    cs:modelsMaterial "Al6061-T6 (Particle/Substrate)" ;
+    cs:modelsMaterial "Ti-6Al-4V (Particle/Substrate)" ;
+
+    # 2.1 Numerical Approach
+    cs:hasNumericalApproach [
+    a cs:NumericalApproach ;
+    cs:approachType "Explicit Finite Element Analysis (FEA)" ;
+    cs:dimensionality "3D symmetric thin slice (chosen for computational efficiency, essentially similar to 2D plane strain models, but constitutive models considered 3D stress-strain relationships)" ;
+    cs:simulationFocus "Single particle impact; Modeling material deformation and coating buildup in cold spray." ;
+
+    # 2.2 Approach Details (Parameters and software settings)
+    cs:hasApproachDetail [
+    a cs:ApproachDetails ;
+    cs:constitutiveModel "Modified Johnson-Cook (JC) model (Eq. 3) to account for viscous regimes at high strain rates, including fitting parameters D and c; Model further extended to include Strain Gradient Plasticity (SGP) consideration (Eq. 16) for particle deformation in cases where strain gradient effects are predominant (e.g., presence of jetting)." ;
+    cs:damageFailureModel "Not specified in sources." ;
+    cs:meshRefinementTechnique "Eight-node linear brick elements with reduced integration point (C3D8R) used for meshing; Implementation utilized a user-defined subroutine VUMAT." ;
+    cs:meshResolution "1/50 dp (where dp is the diameter of the particle) for the particle and the contact region of the substrate." ;
+    cs:particleBoundaryCondition "Initial temperature set to room temperature (298 K); Deformation process considered adiabatic." ;
+    cs:substrateBoundaryCondition "Substrate boundaries M-N and P-O constrained in X-displacement; boundary N-O constrained in both X and Y-displacements; Initial temperature set to room temperature (298 K); Height and width kept approximately five times the particle diameter." ;
+    cs:contactInteractionMethod "General contact algorithm; Coefficient of friction assumed to be 1 (typically used for metal-metal impact)."
+    ]
+    ] ;
+
+    # 3. Modeling Outcome
+    cs:hasModelingOutcome [
+    a cs:ModelingOutcome ;
+    cs:predictedPhenomena "Modified JC models successfully capture the high strain rate increase in material strength, leading to improved stress predictions and less particle deformation (jetting) compared to the Original JC model." ;
+    cs:predictedPhenomena "Higher maximum temperatures observed in regions of localized plastic deformation using modified JC models due to higher calculated stresses." ;
+    cs:predictedPhenomena "Strain Gradient Plasticity (SGP) contribution is necessary for Copper at high impact velocities (> 600 m/s) to prevent excessive plastic strain increase and limit material jetting." ;
+    cs:predictedPhenomena "SGP had limited or no effect on Al6061-T6 deformation due to the lack of visible jetting." ;
+    cs:predictedPhenomena "Ti-6Al-4V showed less strain rate sensitivity, but the modified JC model provided better stress prediction." ;
+
+    # Quantitative Predictions (Flattening Ratio metrics)
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Flattening Ratio (FR) Prediction - Copper (Modified JC w/ SGP)" ;
+    cs:metricValue "2.05" ;
+    cs:metricUnit "Dimensionless" ;
+    cs:atImpactVelocity "500 m/s" ;
+    cs:atImpactTemperature "298 K (Initial)"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Flattening Ratio (FR) Prediction - Al6061-T6 (Modified JC w/o SGP)" ;
+    cs:metricValue "1.4" ;
+    cs:metricUnit "Dimensionless" ;
+    cs:atImpactVelocity "530 m/s" ;
+    cs:atImpactTemperature "298 K (Initial)"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Flattening Ratio (FR) Prediction - Ti-6Al-4V (Modified JC w/o SGP)" ;
+    cs:metricValue "1.91" ;
+    cs:metricUnit "Dimensionless" ;
+    cs:atImpactVelocity "1100 m/s" ;
+    cs:atImpactTemperature "298 K (Initial)"
+    ]
+    ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.surfcoat.2021.126830> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.surfcoat.2021.126830" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "Numerical modeling of fracture in ceramic micro-particles and insights on ceramic retention during composite cold spray process" ;
+        cs:hasAuthor "Rohan Chakrabarty" ;
+        cs:hasAuthor "Jun Song" ;
+        cs:hasJournal "Surface & Coatings Technology" ;
+        cs:hasPublicationYear "2021"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "false"^^xsd:boolean ;
+        cs:validationMethod "Comparison of numerical results regarding fragmentation and deformation morphology (e.g., cone-shaped fragments, retained structure) against experimental observations reported in the literature on composite cold sprayed coatings." ;
+        cs:validationTarget "Ceramic deposition morphology; Reduced fragmentation of ceramics when surrounded by metallic counterparts; Deformation/crater morphology."
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "ABAQUS/Explicit" ;
+        cs:modelsMaterial "Alumina (Al2O3) (Ceramic Particle)" ;
+        cs:modelsMaterial "Al6061-T6 (Substrate)" ;
+
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Explicit finite element (FE) analysis; Continuum-based numerical approach; Lagrangian Method" ;
+            cs:dimensionality "2D axisymmetric approach (element thick)" ;
+            cs:simulationFocus "Single particle impact simulation; Investigation of crack initiation and growth in polycrystalline ceramic particles; Ceramic retention during composite cold spray; Multiple-particle model; First layer crater model" ;
+
+            # 2.2 Approach Details (Parameters and software settings)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "Linear and isotropic elastic responses for ceramic particle bulk; Modified Johnson-Cook (JC) plasticity model for substrate plastic response" ;
+                cs:damageFailureModel "Cohesive Zone Modeling (CZM) (prescribing intergranular failure/grain boundaries); Bilinear traction separation law; Concepts of Continuum Damage Mechanics (CDM) utilized" ;
+                cs:meshRefinementTechnique "Element distortion control; Hourglass control; Mesh convergence study performed to determine optimum resolution" ;
+                cs:meshResolution "Substrate contact region: 1/42dp; Ceramic particle element size: 1/42dp; Z-direction dimension: one element thick (1/62dp)" ;
+                cs:particleBoundaryCondition "Spherical polycrystalline ceramic particle; Diameter 25 μm; Initial temperature 298 K; Impact velocities tested included 100 m/s to 800 m/s; Grain sizes tested: 2.09 μm, 3.75 μm, 6.78 μm" ;
+                cs:substrateBoundaryCondition "Height and width approximately five times the particle diameter; Bottom and side boundaries constrained (Boundary N–O constrained in X and Y-displacements)" ;
+                cs:contactInteractionMethod "General contact algorithm; Coefficient of friction assumed to be 0.5; Grain boundaries defined as cohesive surfaces/interaction property; Adiabatic thermal-stress analysis carried out"
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Crack initiation (located at a distance approximately dp/4 away from the particle-substrate contact point due to biaxial tension)" ;
+            cs:predictedPhenomena "Crack propagation (resulting in oblique and meridian cracks)" ;
+            cs:predictedPhenomena "Formation of cone-shaped residual fragments" ;
+            cs:predictedPhenomena "Mode I fracture (tensile opening) preceded by localized shear stress, leading to 'wing cracks'" ;
+            cs:predictedPhenomena "Reduced ceramic fragmentation when confined by surrounding metal particles (e.g., in multiple particle models with W = 2dp)" ;
+            cs:predictedPhenomena "Higher damage dissipation energy observed for smaller grain sizes" ;
+
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Relationship between grain size and crater depth" ;
+                cs:metricValue "Larger grain sizes showed higher crater depths" ;
+                cs:metricUnit "N/A (Relationship)" ;
+                cs:atImpactVelocity "Varying" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Relationship between grain size and rebounding velocity" ;
+                cs:metricValue "Larger grain sizes showed lower rebounding velocities" ;
+                cs:metricUnit "N/A (Relationship)" ;
+                cs:atImpactVelocity "Varying" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Optimal retention conditions" ;
+                cs:metricValue "Proposed optimal grain size range for lower fragmentation and higher retention probability (higher crater depth and lower rebounding velocity)" ;
+                cs:metricUnit "N/A" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ]
+        ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.surfcoat.2023.129563> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.surfcoat.2023.129563" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "General-purpose numerical deposition modeling methodology based on mesh geometry reconstruction strategy in cold spray additive manufacturing system" ;
+        cs:hasAuthor "Wenbo Li, Hongjian Wu, Mohamed Sokore, Rija Nirina Raoelison, Hanlin Liao, Sophie Costil, Sihao Deng" ;
+        cs:hasJournal "Surface & Coatings Technology" ;
+        cs:hasPublicationYear "2023"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "true"^^xsd:boolean ;
+        cs:validationMethod "Simulations were carried out to verify the effectiveness, reliability, and accuracy of the methodology against experimental results" ;
+        cs:validationTarget "Deposit growth/geometry, coating profile, relative deposition efficiency (RDE) as a function of spraying angle and stand-off distance (SoD), and deposit width and height (20-layer wall stacking)"
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "MATLAB" ;
+        cs:usesSoftware "Robotstudio™ (used to derive kinematic data of path points)" ;
+        cs:modelsMaterial "Copper-70 wt% and angular alumina-30 wt% powder mixture (Particle)" ;
+        cs:modelsMaterial "2017A aluminum plate (Substrate)" ;
+
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "General-purpose Numerical Deposition Modeling Methodology (Mesh Geometry Reconstruction Strategy)" ;
+            cs:dimensionality "3D" ;
+            cs:simulationFocus "Deposit growth/topography evolution in CSAM, continuous deposition modeling, and exploring optimal spraying parameters" ;
+
+            # 2.2 Approach Details (Parameters and software settings)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "N/A (Topological/Geometric Model)" ;
+                cs:damageFailureModel "N/A (Topological/Geometric Model)" ;
+                cs:meshRefinementTechnique "Mesh geometry reconstruction using triangular patching; Continuous motion converted to discrete path points (DPPI)" ;
+                cs:meshResolution "Powder jet interval: 0.2 mm; DPPI (Discrete Path Points Interval) must not exceed σ (standard deviation of Gaussian approximation)" ;
+                cs:particleBoundaryCondition "Cylindrical distribution spray jet model; Single coating spot expressed by Gaussian approximation (Eq. 1); Coating point deleted if impact angle is less than 50°" ;
+                cs:substrateBoundaryCondition "N/A (Mesh reconstruction strategy applies to substrate or existing deposit)" ;
+                cs:contactInteractionMethod "RDE (Relative Deposition Efficiency) function (fitted by a fourth-order polynomial) used to calculate actual coating height based on jet impact angle"
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Accurate simulation of multi-layer deposit growth and topology" ;
+            cs:predictedPhenomena "Cylindrical distribution model is more suitable than conical distribution for CSAM spray jet modeling" ;
+            cs:predictedPhenomena "RDE trend as a function of SoD (maximum at 30 mm)" ;
+            cs:predictedPhenomena "Simulation of deposit edge losses increasing with layer number" ;
+            cs:predictedPhenomena "Simulation of deposition on complex surfaces (spherical, shadow effect/grooves)" ;
+            cs:predictedPhenomena "Coating thickness inversely proportional to traverse speed" ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Relative Error of Deposit Height (20 layers)" ;
+                cs:metricValue "1.684" ;
+                cs:metricUnit "%" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Relative Error of Deposit Width (20 layers)" ;
+                cs:metricValue "16.912" ;
+                cs:metricUnit "%" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Optimal SoD for CSAM" ;
+                cs:metricValue "30" ;
+                cs:metricUnit "mm" ;
+                cs:atImpactVelocity "N/A" ;
+                cs:atImpactTemperature "N/A"
+            ]
+        ]
+    ] .
+
+<http://dx.doi.org/10.1016/S0169-4332(03)00643-3> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/S0169-4332(03)00643-3" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "Computational analysis of the interfacial bonding between feed-powder particles and the substrate in the cold-gas dynamic-spray process" ;
+        cs:hasAuthor "M. Grujicic, J.R. Saylor, D.E. Beasley, W.S. DeRosset, D. Helfritch" ;
+        cs:hasJournal "Applied Surface Science" ;
+        cs:hasPublicationYear "2003"^^xsd:gYear
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "false"^^xsd:boolean ;
+        cs:validationMethod "Numerical simulations are carried out to help explain experimentally observed higher deposition efficiencies in the copper-aluminum system (e.g., data from Gilmore and co-workers)" ;
+        cs:validationTarget "Experimentally observed deposition efficiencies as a function of mean particle velocity for cold spraying of copper-on-aluminum and aluminum-on-copper"
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "CTH computer code (Sandia National Laboratory)" ;
+        cs:modelsMaterial "Copper (Particle/Substrate)" ;
+        cs:modelsMaterial "Aluminum (Particle/Substrate)" ;
+
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Finite-difference based two-step Eulerian computational scheme (Lagrangian step followed by Eulerian step)" ;
+            cs:dimensionality "2D axisymmetric model" ;
+            cs:simulationFocus "Impact process of a single spherical feed-powder particle with a semi-infinite flat substrate (modeling bonding mechanism and role of materials)" ;
+
+            # 2.2 Approach Details (Parameters and software settings)
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "Steinberg–Guinan–Lund (SGL) model; Zerilli–Armstrong (ZA) model; Mie–Grüneisen equation of state" ;
+                cs:solidMechanicsModel "Linear-elastic rate-dependent, temperature-dependent, strain-hardening materials constitutive models (SGL and ZA)" ;
+                cs:thermalTransportModel "Mie–Grüneisen equations of state defining relationships between pressure, internal energy density, density, and temperature" ;
+                cs:depositionCriterion "N/A (Focus is on physical mechanisms like jet formation and interface instability)" ;
+                cs:damageFailureModel "Fracture of material at the jet front is controlled by a hydrostatic tensile stress condition" ;
+                cs:meshRefinementTechnique "Adaptive mesh refinement strategy (block-based, maximum cell-size ratio limited to 2:1) used to ensure fine cell size in the contact region" ;
+                cs:meshResolution "Fine cell size ensured in the particle/substrate contact region using adaptive mesh refinement" ;
+                cs:particleBoundaryCondition "20 µm-diameter sphere, assumed spherical shape; Initially at room temperature; Incident velocities considered within 400–1000 m/s range" ;
+                cs:substrateBoundaryCondition "Semi-infinite 200 µm-diameter cylinder; Symmetry boundary condition (vertical axis); Sound speed based absorbing (transmitting) boundary conditions (bottom and side surfaces)" ;
+                cs:contactInteractionMethod "Von Mises yield criterion; Associated flow rule used for plastic deformation; Radial return procedure used to update deviatoric stress"
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Formation of a surface-scrubbing interfacial jet composed of both particle and substrate material (a necessary condition for bonding)" ;
+            cs:predictedPhenomena "Larger particle/substrate interfacial area and higher contact pressures contribute to higher deposition efficiency for copper deposition on aluminum" ;
+            cs:predictedPhenomena "Interfacial instability (due to viscosity differences) leading to interfacial roll-ups and vortices (promotes material mixing and mechanical interlocking)" ;
+            cs:predictedPhenomena "Rivet-like particle-length scale topological bonding mechanism suggested" ;
+            cs:predictedPhenomena "Highly localized plastic deformation surrounding the interface (high strain rates)" ;
+            cs:predictedPhenomena "Maximum temperature briefly exceeds aluminum melting point only at the highest incident particle velocity (1000 m/s)" ;
+
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum Interfacial Pressure (Aluminum-on-Copper)" ;
+                cs:metricValue "4.1e9" ;
+                cs:metricUnit "Pa" ;
+                cs:atImpactVelocity "800 m/s" ;
+                cs:atImpactTemperature "870 K (Maximum interfacial temperature)"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum Von Mises Equivalent Stress (Aluminum-on-Copper)" ;
+                cs:metricValue "3.8e8" ;
+                cs:metricUnit "Pa" ;
+                cs:atImpactVelocity "800 m/s" ;
+                cs:atImpactTemperature "870 K (Maximum interfacial temperature)"
+            ]
+        ]
+    ] .
+
+<http://dx.doi.org/10.1038/s41598-024-62091-2> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1038/s41598-024-62091-2" ;
+    # 1. Paper Metadata
+    cs:hasMetadata [
+    a cs:Metadata ;
+    cs:hasTitle "A meshless computational framework for studying cold spray additive manufacturing including large numbers of powder particles with diverse characteristics" ;
+    cs:hasAuthor "Z. L. Zhang, M. Afrasiabi, & M. Bambach" ;
+    cs:hasJournal "" ;
+    cs:hasPublicationYear "2024"^^xsd:gYear
+    ] ;
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+    a cs:ExperimentalValidation ;
+    cs:isExperimentConducted "true"^^xsd:boolean ;
+    cs:validationMethod "Experimental data measured for a wide range of powder velocities are used to validate the simulation results and assess the prediction accuracy; Comparisons were made between SPH results (using modified and conventional Johnson-Cook models) and existing experimental observations (Xie et al. 2017) to confirm reliability at high strain rates; The authors also conducted experiments for multi-layer multi-track CSAM to obtain cross-section views and porosity parameters for future investigations." ;
+    cs:validationTarget "Deformation parameters (l/d and d/d0) of Al-6061 powder impact on sapphire surface; Crater depth (dp) of Al powder impact on Al substrate; Coating depth results across subsonic to supersonic regimes."
+    ] ;
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+    a cs:ComputationalStudy ;
+    cs:usesSoftware "MPI based framework (Enhanced SPH solver/meshless computational framework)" ;
+    cs:modelsMaterial "Al-6061 (Powders and Substrate)" ;
+    cs:modelsMaterial "Sapphire (Substrate)" ;
+    # 2.1 Numerical Approach
+    cs:hasNumericalApproach [
+    a cs:NumericalApproach ;
+    cs:approachType "Enhanced Smoothed Particle Hydrodynamics (SPH) method; Decoupled Finite Particle Method (DFPM); Meshless and Lagrangian particle-based method." ;
+    cs:dimensionality "3D" ;
+    cs:simulationFocus "Large-scale modeling of the complete Cold Spray Additive Manufacturing (CSAM) process; Investigation of coating mechanisms regarding multiple powder scenarios, including different powder sizes, morphologies, and distributions; Analysis of pore formation mechanisms; Multi-layer multi-track coating simulations." ;
+    # 2.2 Approach Details (Parameters and software settings)
+    cs:hasApproachDetail [
+    a cs:ApproachDetails ;
+    cs:constitutiveModel "Modified Johnson–Cook (JC) model (Captures strain-rate hardening effects at high strain rates)" ;
+    cs:solidMechanicsModel "Modified Johnson–Cook model" ;
+    cs:thermalTransportModel "Tillotson equation of state (EOS) (Employed to consider phase change and possible gasification effects of the Al material)" ;
+    cs:meshRefinementTechnique "Adaptive smoothing length scheme (updates SPH kernel support according to density variations); Decoupled finite particle method (DFPM) (Extended to model manufacturing problems for the first time); XSPH model (Used to solve tensile instability, clustering, and void formation)." ;
+    cs:meshResolution "Simulation of approximately ten million SPH particles (to discretize powders and substrate); Handles significantly larger number of powders (exceeding ten thousand); Powder sizes adopted based on experimental volume fraction (ranging from 20 µm to 70 µm); Powders generated using the Discrete Element Method (DEM)." ;
+    cs:particleBoundaryCondition "Al-6061 powders (spherical and ellipsoidal morphologies) utilized; Impact velocities adopted from V = 500–1100 m/s for CSAM studies (Vd = 1.47 to 3.23); Initial temperature set to 298 K (Troom)." ;
+    cs:substrateBoundaryCondition "Substrate is large enough to mitigate boundary effects (Al-6061 or sapphire)." ;
+    cs:contactInteractionMethod "Artificial viscosity (Π) used to alleviate numerical instabilities induced by shockwaves; DEM rules used for initial powder distribution (ensuring non-intersection and distance constraints)."
+    ]
+    ] ;
+    # 3. Modeling Outcome
+    cs:hasModelingOutcome [
+    a cs:ModelingOutcome ;
+    cs:predictedPhenomena "Successful reproduction of the formation of a bonded powder layer; Capture of plastic deformation and jetting formation; Observation of material melting predominantly in the vicinity of interface regions; Four-stage variation of coating depth observed for powders with different sizes; Three-stage variation observed for uniform powder size; Increased porosity and decreased coating depth predicted with increasing length-diameter ratio (a/b) for ellipsoidal powders; Extrusion effects between two tracks analyzed; Reduced porosity observed with higher impact velocity." ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Maximum SPH particle count" ;
+    cs:metricValue "10,000,000" ;
+    cs:metricUnit "particles" ;
+    cs:atImpactVelocity "N/A" ;
+    cs:atImpactTemperature "N/A"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Coating Depth Reduction (Ellipsoidal, a/b=1.5)" ;
+    cs:metricValue "Smaller than 0.45 d0" ;
+    cs:metricUnit "dimensionless (relative to powder diameter d0)" ;
+    cs:atImpactVelocity "Vd = 2.65 (Impact Velocity 901 m/s)" ;
+    cs:atImpactTemperature "N/A"
+    ] ;
+    cs:predictedMetric [
+    a cs:QuantitativePrediction ;
+    cs:metricName "Simulated Powder Count" ;
+    cs:metricValue "tens of thousands (exceeding ten thousand)" ;
+    cs:metricUnit "powders" ;
+    cs:atImpactVelocity "N/A" ;
+    cs:atImpactTemperature "N/A"
+    ]
+    ]
+    ] .
+
+
+<http://dx.doi.org/10.1038/s41598-024-62091-2> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1038/s41598-024-62091-2" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "A meshless computational framework for studying cold spray additive manufacturing including large numbers of powder particles with diverse characteristics" ;
+        cs:hasAuthor "Z. L. Zhang, M. Afrasiabi, and M. Bambach" ;
+        cs:hasJournal "Scientific Reports" ;
+        cs:hasPublicationYear "2024"^^xsd:gYear
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "MPI-based framework with an enhanced SPH solver" ;
+        cs:modelsMaterial "Al-6061 (Powders and Substrate)" ;
+        cs:modelsMaterial "Sapphire (Substrate)" ;
+
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Enhanced Smoothed Particle Hydrodynamics (SPH); Decoupled Finite Particle Method (DFPM); Lagrangian and meshless particle-based method" ;
+            cs:dimensionality "3D" ;
+            cs:simulationFocus "Large-scale modeling of the complete CSAM process including real powder sizes, morphologies (spherical and ellipsoidal), and distributions" ;
+
+            # 2.2 Approach Details
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:constitutiveModel "Modified Johnson–Cook (JC) model accounting for strain-rate hardening effects at high strain rates" ;
+                cs:solidMechanicsModel "Modified Johnson–Cook model describing metal plastic flows" ;
+                cs:thermalTransportModel "Tillotson equation of state (EOS) considering phase changes and gasification" ;
+                cs:meshRefinementTechnique "Adaptive smoothing length scheme; XSPH model for tensile instability; Decoupled Finite Particle Method (DFPM) for stability" ;
+                cs:meshResolution "Approximately ten million SPH particles used for large-scale simulations" ;
+                cs:particleBoundaryCondition "Powders with diameters 20–70 µm; Spherical and ellipsoidal shapes (a/b ratio up to 1.5); Impact velocities 500–1100 m/s; Initial temperature 298 K" ;
+                cs:substrateBoundaryCondition "Substrate sized to be large enough to ignore boundary effects" ;
+                cs:contactInteractionMethod "Artificial viscosity (Π) for shockwave instabilities; Discrete Element Method (DEM) rules for non-intersecting powder distribution" ;
+
+                # 2.3 Model Constants (Extracted from Table 1 and Text)
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Al-6061 Density" ;
+                    cs:parameterValue "2700" ;
+                    cs:parameterUnit "kg/m3"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Al-6061 Specific Heat" ;
+                    cs:parameterValue "1009" ;
+                    cs:parameterUnit "J kg-1 K-1"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Al-6061 Melting Temperature (Tmelt)" ;
+                    cs:parameterValue "925" ;
+                    cs:parameterUnit "K"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Modified JC Parameter A" ;
+                    cs:parameterValue "270" ;
+                    cs:parameterUnit "MPa"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Modified JC Parameter B" ;
+                    cs:parameterValue "154.3" ;
+                    cs:parameterUnit "MPa"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Modified JC Parameter C2" ;
+                    cs:parameterValue "0.029" ;
+                    cs:parameterUnit "dimensionless"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Critical Plastic Strain Rate (ε.c)" ;
+                    cs:parameterValue "597" ;
+                    cs:parameterUnit "s-1"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Tillotson EOS Parameter A1" ;
+                    cs:parameterValue "75.2" ;
+                    cs:parameterUnit "MPa"
+                ]
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Reproduction of plastic deformation, jetting formation, and interfacial bonding" ;
+            cs:predictedPhenomena "Identification of a four-stage coating process for multi-sized powders" ;
+            cs:predictedPhenomena "Observation of interfacial melting predominantly near interface regions" ;
+            cs:predictedPhenomena "Pore formation/porosity increases with higher length-to-diameter (a/b) ratios in ellipsoidal powders" ;
+            cs:predictedPhenomena "Increased impact velocity reduces interfacial porosity" ;
+            cs:predictedPhenomena "Higher coating depth in the second track due to extrusion effects from the first track" ;
+
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum SPH particle count" ;
+                cs:metricValue "10,000,000" ;
+                cs:metricUnit "particles"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Simulated powder count" ;
+                cs:metricValue "tens of thousands" ;
+                cs:metricUnit "powders"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Coating Depth (Ellipsoidal, a/b=1.5)" ;
+                cs:metricValue "0.45" ;
+                cs:metricUnit "d0" ;
+                cs:atImpactVelocity "Vd = 2.65"
+            ]
+        ]
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "true"^^xsd:boolean ;
+        cs:validationMethod "Comparison of SPH results with experimental data for single powder impact (morphology and crater depth) and cross-sections of multi-layer multi-track coatings" ;
+        cs:validationTarget "Powder deformation parameters (l/d and d/d0); Crater depth (dp); Porosity and cross-sectional profile of multi-track CSAM"
+    ] .
