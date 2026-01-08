@@ -374,7 +374,7 @@ if ttl_file is not None:
     custom_doi_query =  st.text_input("DOI Search:")
     paper_type = st.selectbox("Select the type of study", ["any", "Experimental", "Numerical"])
     if paper_type == "Experimental":
-        numerical_query = """
+        experimental_query = """
 
                 ?paper a cs:ColdSprayPaper ;
                     cs:hasColdSprayProcess ?y .
