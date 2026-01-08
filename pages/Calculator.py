@@ -59,7 +59,7 @@ st.markdown("""
 left, mid, right = st.columns([40, 1, 1])
 
 with left:
-    col1, col2, col3, col4 = st.columns([1.2, 3, 3, 1.5])
+    col1, col2, col3, col4 = st.columns([1.1, 2.7, 2.7, 1.5])
     with col1:
         st.page_link("main.py", label= "Database")
 
