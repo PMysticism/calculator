@@ -47,7 +47,7 @@ st.set_page_config(
 left, mid, right = st.columns([20, 1, 1])
 
 with left:
-    col1, col2, col3, col4 = st.columns([1, 3, 3, 1.5])
+    col1, col2, col3, col4 = st.columns([1, 3, 3, 2])
     with col1:
         st.page_link("main.py", label= "Database")
 
