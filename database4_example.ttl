@@ -1,0 +1,1313 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix cs: <http://example.org/coldspray#> .
+
+<http://dx.doi.org/10.1016/j.surfcoat.2016.10.064> a cs:ColdSprayPaper ;
+  cs:hasDOI "10.1016/j.surfcoat.2016.10.064" ;
+  cs:hasMetadata [ a cs:Metadata ;
+      cs:hasTitle "The effects of heat treatment on 7075 Al cold spray deposits" ;
+      cs:hasAuthor "M.R. Rokni, C.A. Widener, V.K. Champagne, G.A. Crawford, S.R. Nutt" ;
+      cs:hasJournal "Surface & Coatings Technology" ;
+      cs:hasPublicationYear "2017"^^xsd:gYear ] ;
+  cs:hasMaterial [ a cs:Material ;
+      cs:hasComposition "7075 Al" ;
+      cs:hasCondition "powder" ;
+      cs:hasSupplier "Valimet, Stockton, CA, USA" ;
+      cs:hasPhysicalProperty [ a cs:PhysicalProperty ;
+          cs:propertyName "size" ;
+          cs:propertyValue "18.6 ± 8.2" ;
+          cs:propertyUnit "μm" ] ],
+      [ a cs:Material;
+        cs:hasComposition "7075-T6";
+        cs:hasCondition "Substrates"
+      ];
+  cs:hasPreprocessing [ a cs:Preprocessing ;
+      cs:hasPowderProduction "gas-atomized" ] ;
+  cs:hasColdSprayProcess [ a cs:ColdSprayProcess ;
+      cs:carrierGas "Helium" ;
+      cs:gasPressure "2.8" ;
+      cs:gasPressureUnit "MPa" ;
+      cs:nozzleTemperature "400" ;
+      cs:nozzleTemperatureUnit "°C" ;
+      cs:standOffDistance "25" ;
+      cs:standOffDistanceUnit "mm" ;
+      cs:depositionAngle "90" ;
+      cs:depositionAngleUnit "°" ;
+      cs:powderFeedRate "12" ;
+      cs:powderFeedRateUnit "g min−1" ;
+      cs:scanningSpeed "600" ;
+      cs:scanningSpeedUnit "mm s−1"];
+  cs:hasCharacterization [ a cs:Characterization ;
+      cs:techniqueName "laser diffraction particle size analyzer" ],
+      [ a cs:Characterization ;
+          cs:techniqueName "SEM" ],
+      [ a cs:Characterization ;
+          cs:techniqueName "TEM" ],
+      [ a cs:Characterization ;
+          cs:techniqueName "EBSD" ],
+      [ a cs:Characterization ;
+          cs:techniqueName "Universal Testing Machine" ;
+          cs:parameter "loading rate of 200 μm/min" ],
+      [ a cs:Characterization ;
+          cs:techniqueName "Vicker's microhardness tester" ;
+          cs:parameter "indenter load of 300 g" ],
+      [ a cs:Characterization ;
+          cs:techniqueName "XRD"] ;
+  cs:hasResult [ a cs:Result ;
+      cs:hasMechanicalProperty [ a cs:MechanicalProperty ;
+          cs:propertyName "Ultimate Tensile Strength (UTS)" ;
+          cs:propertyValue "Lowest in AD condition, improved by HT" ;
+          cs:propertyUnit "MPa" ],
+       [ a cs:MechanicalProperty;
+          cs:propertyName "Elongation";
+          cs:propertyValue "Increased after both low- and high-temperature treatments";
+          cs:propertyUnit "%" ],
+      [ a cs:Result;
+      cs:hasMicrostructureResult [ a cs:MicrostructureResult ;
+          cs:featureDescription "Porosity" ;
+  cs:featureValue "no evidence of porosity" ]],
+      [ a cs:Result;
+        cs:hasMicrostructureResult [ a cs:MicrostructureResult;
+          cs:featureDescription "Grain Size";
+          cs:featureValue "354 ± 47";
+          cs:featureUnit "nm" ]],
+        [ a cs:Result;
+        cs:hasMicrostructureResult [ a cs:MicrostructureResult;
+          cs:featureDescription "Grain Size in T6";
+          cs:featureValue "362 ± 39";
+          cs:featureUnit "nm" ]],
+        [ a cs:Result;
+        cs:hasMicrostructureResult [ a cs:MicrostructureResult;
+          cs:featureDescription "Grain Size in T73";
+          cs:featureValue "383 ± 61";
+          cs:featureUnit "nm" ]],
+          [ a cs:Result;
+        cs:hasMicrostructureResult [ a cs:MicrostructureResult;
+          cs:featureDescription "Grain Size in T7X";
+          cs:featureValue "361 ± 42";
+          cs:featureUnit "nm" ]],
+        [ a cs:Result;
+        cs:hasMicrostructureResult [ a cs:MicrostructureResult;
+          cs:featureDescription "Grain Size in SR";
+          cs:featureValue "358 ± 52";
+          cs:featureUnit "nm" ]],
+        [ a cs:Result;
+        cs:hasMicrostructureResult [ a cs:MicrostructureResult;
+          cs:featureDescription "Grain Size in Annealed";
+          cs:featureValue "441 ± 68";
+          cs:featureUnit "nm" ]],
+        [ a cs:Result;
+        cs:hasMicrostructureResult [ a cs:MicrostructureResult;
+          cs:featureDescription "Grain Size in SS + T6";
+          cs:featureValue "486 ± 19";
+          cs:featureUnit "nm" ]]].
+
+
+<http://dx.doi.org/10.1016/j.jmatprotec.2024.118461> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.jmatprotec.2024.118461" ;
+    cs:hasMetadata [ a cs:Metadata ;
+            cs:hasTitle "Post-processing of cold sprayed Ti6Al4V coating by laser shock peening" ;
+            cs:hasAuthor "Niroj Maharjan, Thivyaa Ramesh, Duy Quang Pham, Wengang Zhai, Andrew Ang, Wei Zhou" ;
+            cs:hasJournal "Journal of Materials Processing Technology" ;
+            cs:hasPublicationYear "2024"^^xsd:gYear ] ;
+    cs:hasMaterial [ a cs:Material ;
+            cs:hasComposition "Ti6Al4V" ;
+            cs:hasCondition "powder, as-sprayed, heat treated" ;
+            cs:hasSupplier "Plasma Giken (PG-AMP-1120)" ;
+            cs:hasPhysicalProperty [ a cs:PhysicalProperty ;
+                    cs:propertyName "bulk density" ;
+                    cs:propertyValue "1.508" ;
+                    cs:propertyUnit "g/cm3" ],
+                [ a cs:PhysicalProperty ;
+                    cs:propertyName "average size" ;
+                    cs:propertyValue "45" ;
+                    cs:propertyUnit "µm" ]
+                     ] ;
+    cs:hasPreprocessing [ a cs:Preprocessing ;
+            cs:hasPowderProduction "gas atomized" ;
+            cs:hasHeatTreatment [ a cs:HeatTreatment ;
+                    cs:annealingTemperature "600" ;
+                    cs:annealingTime "1 hour" ] ] ;
+    cs:hasColdSprayProcess [ a cs:ColdSprayProcess ;
+            cs:carrierGas "Nitrogen" ;
+            cs:gasPressure "5" ;
+            cs:gasPressureUnit "MPa" ;
+            cs:nozzleTemperature "1000" ;
+            cs:nozzleTemperatureUnit "◦C" ;
+            cs:powderFeedRate "~12.5" ;
+            cs:powderFeedRateUnit "g/min" ;
+            cs:scanningSpeed "500" ;
+            cs:trackSpacing "0.5" ;
+            cs:scanningSpeedUnit "mm/s";
+            cs:trackSpacingUnit "mm";
+            cs:depositionAngle "90";
+            cs:depositionAngleUnit "degree"
+             ] ;
+    cs:hasCharacterization [ a cs:Characterization ;
+            cs:techniqueName "Optical Microscopy" ],
+           [ a cs:Characterization ;
+            cs:techniqueName "Scanning Electron Microscopy (SEM)" ;
+            cs:parameter "Secondary Electron (SE), Low-Angle Backscattered Electron (LABE), 10 kV" ],
+           [ a cs:Characterization ;
+            cs:techniqueName "X-ray Diffraction (XRD)" ;
+            cs:parameter "Cu K1 (λ = 0.1542 nm)" ],
+           [ a cs:Characterization ;
+            cs:techniqueName "Electron Backscattered Diffraction (EBSD)" ;
+            cs:parameter "20 kV" ],
+           [ a cs:Characterization ;
+            cs:techniqueName "Vickers Microhardness" ;
+            cs:parameter "500 gf, 10 s" ],
+           [ a cs:Characterization ;
+            cs:techniqueName "Nanoindentation" ;
+            cs:parameter "Berkovich indenter, 1000 μN" ],
+           [ a cs:Characterization ;
+            cs:techniqueName "Adhesion Strength Test" ;
+            cs:parameter "ASTM C633–13" ],
+           [ a cs:Characterization ;
+            cs:techniqueName "X-ray Diffraction" ;
+            cs:parameter "Xstress G3 X-ray diffractometer, 2 mm spot size, 2θ angle of 141◦ and Cu X-Ray tube (λ = 0.1542 nm)" ] ;
+    cs:hasResult [ a cs:Result ;
+            cs:porosity "10.63 ± 1.91" ;
+            cs:porosityUnit "%" ;
+            cs:hasMechanicalProperty [ a cs:MechanicalProperty ;
+                    cs:propertyName "Adhesion Strength" ;
+                    cs:propertyValue "36.8 ± 6.2" ;
+                    cs:propertyUnit "MPa" ] ],
+            [ a cs:Result ;
+            cs:porosity "9.58 ± 1.00" ;
+            cs:porosityUnit "%" ;
+            cs:hasMechanicalProperty [ a cs:MechanicalProperty ;
+                    cs:propertyName "Adhesion Strength" ;
+                    cs:propertyValue "74.5 ± 4.7" ;
+                    cs:propertyUnit "MPa" ] ],
+             [ a cs:Result ;
+            cs:porosity "0.72 ± 0.17" ;
+            cs:porosityUnit "%" ;
+            cs:hasMechanicalProperty [ a cs:MechanicalProperty ;
+                    cs:propertyName "Adhesion Strength" ;
+                    cs:propertyValue ">81.4" ;
+                    cs:propertyUnit "MPa" ] ],
+             [ a cs:Result;
+               cs:hasMicrostructureResult [ a cs:MicrostructureResult;
+                                            cs:featureDescription "Grain size (As-sprayed + HT)";
+                                            cs:featureValue "0.63 ± 0.09";
+                                            cs:featureUnit "μm" ],
+                                           [ a cs:MicrostructureResult;
+                                            cs:featureDescription "Grain size (As-sprayed + HT + LSP)";
+                                            cs:featureValue "0.38 ± 0.02";
+                                            cs:featureUnit "μm" ]],
+             [ a cs:Result;
+               cs:hasMechanicalProperty [ a cs:MechanicalProperty;
+                                           cs:propertyName "Surface Hardness (As-sprayed)";
+                                           cs:propertyValue "335";
+                                           cs:propertyUnit "HV" ],
+                                          [ a cs:MechanicalProperty;
+                                           cs:propertyName "Surface Hardness (As-sprayed + HT)";
+                                           cs:propertyValue "324";
+                                           cs:propertyUnit "HV" ],
+                                          [ a cs:MechanicalProperty;
+                                           cs:propertyName "Surface Hardness (As-sprayed + HT + LSP)";
+                                           cs:propertyValue "386";
+                                           cs:propertyUnit "HV" ]].
+
+<http://dx.doi.org/10.1007/s11837-021-05002-4> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1007/s11837-021-05002-4" ;
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "A Through-Process Experimental Approach to Enable Optimization of Cold Sprayed Al 7075 Consolidation Performance" ;
+        cs:hasAuthor "Kyle Tsaknopoulos, Bryer Sousa, Christopher Massar, Jack Grubbs, Mathew Siopis, and Danielle Cote" ;
+        cs:hasJournal "JOM" ;
+        cs:hasPublicationYear "2022"^^xsd:gYear
+    ] ;
+    cs:hasMaterial [
+        a cs:Material ;
+        cs:hasComposition "Al 7075" ;
+        cs:hasCondition "powder" ;
+        cs:hasSupplier "Solvus Global (Worcester, MA)" ;
+        cs:hasPhysicalProperty [
+            a cs:PhysicalProperty ;
+            cs:propertyName "Particle size distribution D10" ;
+            cs:propertyValue "20.68" ;
+            cs:propertyUnit "lm"
+        ] ;
+        cs:hasPhysicalProperty [
+            a cs:PhysicalProperty ;
+            cs:propertyName "Particle size distribution D50" ;
+            cs:propertyValue "33.77" ;
+            cs:propertyUnit "lm"
+        ] ;
+        cs:hasPhysicalProperty [
+            a cs:PhysicalProperty ;
+            cs:propertyName "Particle size distribution D90" ;
+            cs:propertyValue "53.44" ;
+            cs:propertyUnit "lm"
+        ] ;
+       cs:hasPhysicalProperty [
+            a cs:PhysicalProperty ;
+            cs:propertyName "Average particle width-to-length ratio" ;
+            cs:propertyValue "0.792"
+        ];
+        cs:hasPhysicalProperty [
+             a cs:PhysicalProperty;
+             cs:propertyName "Average grain size";
+             cs:propertyValue "1.77 ± 0.20";
+             cs:propertyUnit "lm"
+       ];
+       cs:hasPhysicalProperty [
+            a cs:PhysicalProperty;
+            cs:propertyName "SL ratio";
+            cs:propertyValue "0.39"
+       ];
+       cs:hasPhysicalProperty [
+            a cs:PhysicalProperty;
+            cs:propertyName "Avalanche angle";
+            cs:propertyValue "45.1 ± 3";
+            cs:propertyUnit "degrees"
+       ];
+       cs:hasPhysicalProperty [
+            a cs:PhysicalProperty;
+            cs:propertyName "Hardness";
+            cs:propertyValue "1.55";
+            cs:propertyUnit "GPa"
+       ];
+       cs:hasPhysicalProperty [
+            a cs:PhysicalProperty;
+            cs:propertyName "Modulus";
+            cs:propertyValue "71.71";
+            cs:propertyUnit "GPa"
+       ]
+    ] ;
+   cs:hasMaterial [
+        a cs:Material ;
+        cs:hasComposition "Al 6061-T651" ;
+        cs:hasCondition "substrate" ;
+        cs:hasSupplier "Online Metals (Seattle, WA)"
+    ] ;
+    cs:hasPreprocessing [
+        a cs:Preprocessing ;
+        cs:hasPowderProduction "Gas-atomized" ;
+        cs:hasHeatTreatment [
+            a cs:HeatTreatment ;
+            cs:annealingTemperature "200-300" ;
+            cs:annealingTimeUnit "°C";
+            cs:annealingTime "1" ;
+            cs:annealingTimeUnit "h"
+        ]
+    ] ;
+    cs:hasColdSprayProcess [
+        a cs:ColdSprayProcess ;
+        cs:carrierGas "He" ;
+        cs:gasPressure "535" ;
+        cs:gasPressureUnit "psi" ;
+        cs:nozzleTemperature "445" ;
+        cs:nozzleTemperatureUnit "°C" ;
+        cs:standOffDistance "25" ;
+        cs:standOffDistanceUnit "mm" ;
+        cs:nozzleType "PBI" ;
+  cs:nozzleDimensions  "throat diameter of 1.75 mm, an exit diameter of 5 mm, and an overall length of 170 mm, with a diverging length of approximately 152 mm";
+        cs:powderFeedRate "4.0" ;
+        cs:powderFeedRateUnit "RPM";
+  cs:powderFeederFlowRate "120";
+  cs:powderFeederFlowRateUnit "slm";
+        cs:depositionAngle "90" ;
+        cs:depositionAngleUnit "degrees";
+        cs:scanningSpeed "200" ;
+        cs:scanningSpeedUnit "mm/s";
+  cs:trackSpacing "1";
+  cs:trackSpacingUnit "mm"
+    ] ;
+    cs:hasCharacterization [
+        a cs:Characterization ;
+        cs:techniqueName "SEM"
+    ] ;
+    cs:hasCharacterization [
+        a cs:Characterization ;
+        cs:techniqueName "EDS"
+    ] ;
+    cs:hasCharacterization [
+        a cs:Characterization ;
+        cs:techniqueName "XRD"
+    ] ;
+  cs:hasCharacterization [
+        a cs:Characterization ;
+        cs:techniqueName "Nanoindentation"
+    ] ;
+   cs:hasCharacterization [
+        a cs:Characterization ;
+        cs:techniqueName "Uniaxial tensile testing";
+  cs:parameter "ASTM E8/EM8-21"
+    ] ;
+    cs:hasResult [
+        a cs:Result ;
+        cs:depositionEfficiency "58.1" ;
+        cs:depositionEfficiencyUnit "%";
+        cs:hasMechanicalProperty [
+             a cs:MechanicalProperty;
+             cs:propertyName "Yield Strength";
+             cs:propertyValue "286.32 ± 20.73";
+             cs:propertyUnit "MPa"
+       ];
+       cs:hasMechanicalProperty [
+             a cs:MechanicalProperty;
+             cs:propertyName "Ultimate Tensile Strength";
+             cs:propertyValue "357.50 ± 20.30";
+             cs:propertyUnit "MPa"
+       ];
+       cs:hasMechanicalProperty [
+             a cs:MechanicalProperty;
+             cs:propertyName "Elongation";
+             cs:propertyValue "1.61";
+             cs:propertyUnit "%"
+       ];
+        cs:hasMicrostructureResult [
+            a cs:MicrostructureResult ;
+            cs:featureDescription "T-phase in the internal powder microstructure"
+        ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.addlet.2022.100046> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.addlet.2022.100046" ;
+    cs:hasMetadata [ a cs:Metadata ;
+            cs:hasTitle "Printability of low-cost pre-heat-treated ball milled Al7075 powders using compressed air assisted cold spray additive manufacturing" ;
+            cs:hasAuthor "K. Prasad, M.A. Khalik, N. Hutasoit, R.A. Rahman Rashid, R. Rashid, A. Duguid, S. Palanisamy" ;
+            cs:hasJournal "Additive Manufacturing Letters" ;
+            cs:hasPublicationYear "2022"^^xsd:gYear ] ;
+    cs:hasMaterial [ a cs:Material ;
+            cs:hasComposition "Al7075" ;
+            cs:hasCondition "Powder, Annealed" ;
+            cs:hasSupplier "Spee3D" ;
+            cs:hasPhysicalProperty [ a cs:PhysicalProperty ;
+                    cs:propertyName "Morphology" ;
+                    cs:propertyValue "Irregular shape with sharp edges and jagged surfaces" ],
+                [ a cs:PhysicalProperty ;
+                    cs:propertyName "Hardness" ;
+                    cs:propertyValue "129" ;
+                    cs:propertyUnit "HV0.005" ] ],
+                [ a cs:Material ;
+            cs:hasComposition "Al5005" ;
+            cs:hasCondition "Substrate" ] ;
+    cs:hasPreprocessing [ a cs:Preprocessing ;
+            cs:hasPowderProduction "Ball Milling" ;
+            cs:hasHeatTreatment [ a cs:HeatTreatment ;
+                    cs:annealingTemperature "250 °C" ;
+                    cs:annealingTime "4 h" ],
+                [ a cs:HeatTreatment ;
+                    cs:annealingTemperature "250 °C" ;
+                    cs:annealingTime "8 h" ],
+                [ a cs:HeatTreatment ;
+                    cs:annealingTemperature "300 °C" ;
+                    cs:annealingTime "4 h" ] ] ;
+    cs:hasColdSprayProcess [ a cs:ColdSprayProcess ;
+            cs:carrierGas "Air" ;
+            cs:gasPressure "30" ;
+            cs:gasPressureUnit "bar" ;
+            cs:nozzleTemperature "542" ;
+            cs:nozzleTemperatureUnit "°C" ;
+            cs:standOffDistance "16" ;
+            cs:standOffDistanceUnit "mm" ;
+            cs:nozzleType "DeLaval" ;
+            cs:nozzleDimensions "Length: 200 mm, Diameter: 6.5 mm" ] ;
+    cs:hasCharacterization [ a cs:Characterization ;
+            cs:techniqueName "DSC" ;
+            cs:parameter "Temperature ramp of 10 °C/min in the temperature range of 30–500 °C" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "XRD" ;
+            cs:parameter "Cu Kα radiation in the 2θ range of 20–120°" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "Microhardness Testing" ;
+            cs:parameter "Load of 5 gf, dwell time of 10 s for powders; Load of 100 gf, dwell time of 10 s for printed specimens" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "Optical Microscopy (OM)" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "Scanning Electron Microscopy (SEM)" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "Energy Dispersive Spectroscopy (EDS)" ] ;
+    cs:hasResult [ a cs:Result ;
+            cs:depositionEfficiency "59" ;
+            cs:porosity "1.80" ;
+            cs:porosityUnit "%" ;
+            cs:hasMechanicalProperty [ a cs:MechanicalProperty ;
+                    cs:propertyName "Hardness" ;
+                    cs:propertyValue "135" ;
+                    cs:propertyUnit "HV0.005" ] ;
+            cs:hasMicrostructureResult [ a cs:MicrostructureResult ;
+                    cs:featureDescription "Trapped porosities due to the irregular shaped powder particles" ] ] .
+
+<https://doi.org/10.1016/j.addma.2024.104246> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.addma.2024.104246" ;
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "Effects of post-deposition processing on static and cyclic performance of cold sprayed 6061 aluminum alloy" ;
+        cs:hasAuthor "Ahmad Nourian, Chad Beamer, Sinan Muftu" ;
+        cs:hasJournal "Additive Manufacturing" ;
+        cs:hasPublicationYear "2024"^^xsd:gYear
+    ] ;
+    cs:hasMaterial [
+        a cs:Material ;
+        cs:hasComposition "6061 Aluminum Alloy" ;
+        cs:hasCondition "Powder, As-sprayed, Heat-treated" ;
+        cs:hasSupplier "Solvus Global LLC (Powder), McMaster-Carr (Substrate)" ;
+        cs:hasPhysicalProperty [
+            a cs:PhysicalProperty ;
+            cs:propertyName "Morphology" ;
+            cs:propertyValue "Approximately spherical"
+        ] ;
+        cs:hasPhysicalProperty [
+            a cs:PhysicalProperty ;
+            cs:propertyName "Particle Size D10" ;
+            cs:propertyValue "29" ;
+            cs:propertyUnit "μm"
+        ] ;
+        cs:hasPhysicalProperty [
+            a cs:PhysicalProperty ;
+            cs:propertyName "Particle Size D50" ;
+            cs:propertyValue "39" ;
+            cs:propertyUnit "μm"
+        ] ;
+        cs:hasPhysicalProperty [
+            a cs:PhysicalProperty ;
+            cs:propertyName "Particle Size D90" ;
+            cs:propertyValue "51" ;
+            cs:propertyUnit "μm"
+        ]
+    ] ;
+    cs:hasPreprocessing [
+        a cs:Preprocessing ;
+        cs:hasPowderProduction "Gas atomization" ;
+        cs:hasHeatTreatment [
+            a cs:HeatTreatment ;
+            cs:annealingTemperature "413 °C" ;
+            cs:annealingTime "2 hours"
+        ]
+    ] ;
+    cs:hasPreprocessing [
+     a cs:Preprocessing ;
+     cs:hasHeatTreatment [
+      a cs:HeatTreatment ;
+      cs:annealingTemperature "600 °C" ;
+      cs:annealingTime "2 hours"
+     ]
+    ] ;
+    cs:hasColdSprayProcess [
+        a cs:ColdSprayProcess ;
+        cs:carrierGas "Nitrogen, Helium" ;
+        cs:gasPressure "6.5, 4.0" ;
+        cs:gasPressureUnit "MPa" ;
+        cs:nozzleTemperature "455, 425" ;
+        cs:nozzleTemperatureUnit "℃" ;
+        cs:standOffDistance "25" ;
+        cs:standOffDistanceUnit "mm" ;
+        cs:nozzleType "PBI" ;
+        cs:nozzleDimensions "Length: 170 mm, Throat Dia: 2.0, 1.5 mm, Exit Dia: 6.0 mm" ;
+        cs:powderFeedRate "8.0" ;
+        cs:powderFeedRateUnit "g/min"
+    ] ;
+    cs:hasCharacterization [
+        a cs:Characterization ;
+        cs:techniqueName "Optical Microscopy" ;
+        cs:parameter "Zen Core V2.6 image analysis software"
+    ] ;
+    cs:hasCharacterization [
+     a cs:Characterization ;
+     cs:techniqueName "Scanning Electron Microscopy (SEM)"
+    ] ;
+    cs:hasCharacterization [
+     a cs:Characterization ;
+     cs:techniqueName "Electron Backscatter Diffraction (EBSD)" ;
+     cs:parameter "Tescan Lyra 3 GMU SEM"
+    ] ;
+    cs:hasCharacterization [
+     a cs:Characterization ;
+     cs:techniqueName "Scanning Transmission Electron Microscopy (STEM)" ;
+     cs:parameter "FEI Titan Themis 300"
+    ] ;
+    cs:hasCharacterization [
+     a cs:Characterization ;
+     cs:techniqueName "Microhardness Testing" ;
+     cs:parameter "Alpha MTH 2000-Z micro-hardness tester, ASTM E384"
+    ] ;
+    cs:hasCharacterization [
+     a cs:Characterization ;
+     cs:techniqueName "Tensile Testing" ;
+     cs:parameter "Instron servo-hydraulic load frame, ASTM E8/E8M-16"
+    ] ;
+    cs:hasCharacterization [
+     a cs:Characterization ;
+     cs:techniqueName "Fatigue Testing" ;
+     cs:parameter "Instron servo-hydraulic load frame, ASTM E466-15"
+    ] ;
+    cs:hasResult [
+        a cs:Result ;
+        cs:porosity "0.88" ;
+        cs:porosityUnit "%" ;
+        cs:hasMechanicalProperty [
+            a cs:MechanicalProperty ;
+            cs:propertyName "Tensile Strength" ;
+            cs:propertyValue "282" ;
+            cs:propertyUnit "MPa"
+        ] ;
+        cs:hasMicrostructureResult [
+            a cs:MicrostructureResult ;
+            cs:featureDescription "Average Porosity" ;
+            cs:featureValue "0.06" ;
+            cs:featureUnit "%"
+        ]
+    ] ;
+    cs:hasResult [
+     a cs:Result ;
+     cs:hasMechanicalProperty [
+      a cs:MechanicalProperty ;
+      cs:propertyName "Tensile Strength" ;
+      cs:propertyValue "49" ;
+      cs:propertyUnit "MPa"
+     ]
+    ] .
+
+<http://dx.doi.org/10.1016/j.addma.2024.104347> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.addma.2024.104347" ;
+    cs:hasMetadata [ a cs:Metadata ;
+            cs:hasTitle "A novel void healing mechanism in cold sprayed nanostructured coating via grain boundary migration under low-temperature sintering" ;
+            cs:hasAuthor "Di Ouyang, Zhi-Yu Liu, Wan-Li Song, Jie Pan, Ying-Chun Xie, Cheng Zhang, Liang Zhang, Lin Liu" ;
+            cs:hasJournal "Additive Manufacturing" ;
+            cs:hasPublicationYear "2024"^^xsd:gYear ] ;
+    cs:hasMaterial [ a cs:Material ;
+            cs:hasComposition "CuCrZr" ;
+            cs:hasCondition "powder" ;
+            cs:hasSupplier "Commercial" ;
+            cs:hasPhysicalProperty [ a cs:PhysicalProperty ;
+                    cs:propertyName "purity" ;
+                    cs:propertyValue ">99.9" ;
+                    cs:propertyUnit "%" ],
+                [ a cs:PhysicalProperty ;
+                    cs:propertyName "mean particle size" ;
+                    cs:propertyValue "25" ;
+                    cs:propertyUnit "μm" ] ],
+        [ a cs:Material ;
+            cs:hasComposition "Al2O3 dispersion-strengthened copper (ODS-Cu)" ;
+            cs:hasCondition "substrate" ] ;
+    cs:hasPreprocessing [ ] ;
+    cs:hasColdSprayProcess [ a cs:ColdSprayProcess ;
+            cs:carrierGas "Nitrogen" ;
+            cs:gasPressure "4" ;
+            cs:gasPressureUnit "MPa" ;
+            cs:nozzleTemperature "700" ;
+            cs:nozzleTemperatureUnit "°C" ;
+            cs:standOffDistance "30" ;
+            cs:standOffDistanceUnit "mm" ;
+            cs:scanningSpeed "300" ;
+            cs:scanningSpeedUnit "mm/s" ] ;
+    cs:hasCharacterization [ a cs:Characterization ;
+            cs:techniqueName "Scanning electron microscopy (SEM) with electron backscattered diffraction (EBSD) detector" ;
+            cs:parameter "electrochemical etching" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "X-ray tomography (XRT)" ;
+            cs:parameter "sample size of Φ2 mm × 5.5 mm" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "Transmission electron microscopy (TEM)" ;
+            cs:parameter "FEI Tecnai G2" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "Focused ion beam (FIB)" ;
+            cs:parameter "Thermofisher Scios2" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "In-situ heating TEM" ;
+            cs:parameter "Tecnai F30 TEM with a Gatan model 901 double-tilt heating holder" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "Interface shear strength test" ;
+            cs:parameter "home-made testing set-up" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "Electrical conductivity tests" ;
+            cs:parameter "eddy electrical conductivity gauge (Sigma 2008B)" ],
+        [ a cs:Characterization ;
+            cs:techniqueName "Tensile tests" ;
+            cs:parameter "gauge of 12 mm × 2.5 mm × 0.5 mm" ],
+        [ a cs:Characterization;
+         cs:techniqueName "Finite element modelling (FEM)";
+         cs:parameter "ABAQUS software, C3D8RT elements"
+       ],
+       [ a cs:Characterization;
+         cs:techniqueName "Molecular dynamics (MD) simulation";
+         cs:parameter "Large-scale Atomic/Molecular Massively Parallel Simulator (LAMMPS)"
+       ] ;
+    cs:hasResult [ a cs:Result ;
+            cs:hasMechanicalProperty [ a cs:MechanicalProperty ;
+                    cs:propertyName "Interfacial shear bonding strength (as-sprayed)" ;
+                    cs:propertyValue "55" ;
+                    cs:propertyUnit "MPa" ],
+                [ a cs:MechanicalProperty ;
+                    cs:propertyName "Interfacial shear bonding strength (S500)" ;
+                    cs:propertyValue "195" ;
+                    cs:propertyUnit "MPa" ],
+         [ a cs:MechanicalProperty ;
+                    cs:propertyName "Tensile strength (as-sprayed)" ;
+                    cs:propertyValue "619.4" ;
+                    cs:propertyUnit "MPa" ],
+                [ a cs:MechanicalProperty ;
+                    cs:propertyName "Tensile strength (S500)" ;
+                    cs:propertyValue "739.6" ;
+                    cs:propertyUnit "MPa" ] ;
+            cs:depositionEfficiency "N/A" ;
+            cs:porosity "0.045" ;
+            cs:porosityUnit "%" ;
+         cs:hasMicrostructureResult [ a cs:MicrostructureResult;
+         cs:featureDescription "Overall porosity in the S500 sample";
+         cs:featureValue "0.013";
+         cs:featureUnit "%"
+       ],
+                [ a cs:MicrostructureResult ;
+                    cs:featureDescription "Electrical conductivity (as-sprayed)" ;
+                    cs:featureValue "24.7" ;
+                    cs:featureUnit "% IACS" ],
+                [ a cs:MicrostructureResult ;
+                    cs:featureDescription "Electrical conductivity (S500)" ;
+                    cs:featureValue "75.1" ;
+                    cs:featureUnit "% IACS" ] ] .
+
+<http://dx.doi.org/10.1016/j.addma.2024.104548> a cs:ColdSprayPaper ;
+  cs:hasDOI "10.1016/j.addma.2024.104548" ;
+  cs:hasMetadata [ a cs:Metadata ;
+      cs:hasTitle "Laser assisted cold spray of aluminum alloy 6061: Experimental results" ;
+      cs:hasAuthor "Samuel Boese, Aidan Sevinsky, Ahmad Nourian-Avval, Ozan Özdemir, Sinan Müftü" ;
+      cs:hasJournal "Additive Manufacturing" ;
+      cs:hasPublicationYear "2024"^^xsd:gYear ] ;
+  cs:hasMaterial [ a cs:Material ;
+      cs:hasComposition "Aluminum Alloy 6061 (Al6061)" ;
+      cs:hasCondition "Powder" ;
+      cs:hasSupplier "Solvus Global®" ;
+      cs:hasPhysicalProperty [ a cs:PhysicalProperty ;
+          cs:propertyName "Morphology" ;
+          cs:propertyValue "Spherical" ;
+        ] ;
+        cs:hasPhysicalProperty [ a cs:PhysicalProperty ;
+            cs:propertyName "Particle Size D10" ;
+            cs:propertyValue "23.5" ;
+            cs:propertyUnit "μm" ;
+          ] ;
+        cs:hasPhysicalProperty [ a cs:PhysicalProperty ;
+            cs:propertyName "Particle Size D50" ;
+            cs:propertyValue "35.5" ;
+            cs:propertyUnit "μm" ;
+          ] ;
+        cs:hasPhysicalProperty [ a cs:PhysicalProperty ;
+            cs:propertyName "Particle Size D90" ;
+            cs:propertyValue "55.0" ;
+            cs:propertyUnit "μm" ;
+          ];
+    ] ;
+  cs:hasMaterial [ a cs:Material ;
+      cs:hasComposition "Aluminum Alloy 6061-T6" ;
+      cs:hasCondition "Substrate" ;
+      cs:hasSupplier "McMaster-Carr®" ;
+    ] ;
+  cs:hasColdSprayProcess [ a cs:ColdSprayProcess ;
+      cs:carrierGas "Nitrogen" ;
+      cs:gasPressure "6.55" ;
+      cs:gasPressureUnit "MPa" ;
+      cs:nozzleTemperature "425" ;
+      cs:nozzleTemperatureUnit "°C" ;
+      cs:standOffDistance "40" ;
+      cs:standOffDistanceUnit "mm" ;
+      cs:nozzleMaterial "Polybenzimidazole (PBI)" ;
+      cs:nozzleType "NZZL0070" ;
+      cs:nozzleDimensions "Throat Diameter: 2 mm, Exit Diameter: 6.3 mm, Length: 170 mm" ;
+      cs:powderFeedRate "5.5" ;
+      cs:powderFeedRateUnit "g/min" ;
+      cs:depositionAngle "90" ;
+      cs:depositionAngleUnit "°" ;
+      cs:scanningSpeed "200" ;
+      cs:fixtureForThermalControl "Hotplate (up to 500°C), Insulation" ;
+    ] ;
+  cs:hasCharacterization [ a cs:Characterization ;
+      cs:techniqueName "Tensile Testing" ;
+      cs:parameter "ASTM E8" ;
+    ] ;
+  cs:hasCharacterization [ a cs:Characterization ;
+      cs:techniqueName "Metallography" ;
+    ] ;
+  cs:hasCharacterization [ a cs:Characterization ;
+      cs:techniqueName "Scanning Electron Microscopy (SEM)" ;
+    ] ;
+  cs:hasCharacterization [ a cs:Characterization ;
+      cs:techniqueName "Transition Electron Microscopy (TEM)" ;
+    ] ;
+    cs:hasCharacterization [ a cs:Characterization ;
+        cs:techniqueName "Energy Dispersive Spectroscopy (EDS)" ;
+      ] ;
+  cs:hasCharacterization [ a cs:Characterization ;
+      cs:techniqueName "Electron Backscatter Diffraction (EBSD)" ;
+    ] ;
+  cs:hasCharacterization [ a cs:Characterization ;
+      cs:techniqueName "X-Ray Diffraction (XRD)" ;
+    ] ;
+  cs:hasCharacterization [ a cs:Characterization ;
+      cs:techniqueName "Fatigue Testing" ;
+      cs:parameter "ASTM E466"
+    ] ;
+    cs:hasCharacterization [ a cs:Characterization ;
+        cs:techniqueName "Bond Button Test" ;
+        cs:parameter "ASTM C633"
+      ] ;
+  cs:hasResult [ a cs:Result ;
+      cs:depositionEfficiency "38-63" ;
+      cs:porosity "0.24-1.73" ;
+      cs:porosityUnit "%" ;
+      cs:hasMechanicalProperty [ a cs:MechanicalProperty ;
+          cs:propertyName "Tensile Strength" ;
+          cs:propertyValue "34.3-167.6" ;
+          cs:propertyUnit "MPa" ;
+        ] ;
+      cs:hasMechanicalProperty [ a cs:MechanicalProperty ;
+          cs:propertyName "Elongation" ;
+          cs:propertyValue "0.07-15.58" ;
+          cs:propertyUnit "%" ;
+        ] ;
+        cs:hasMechanicalProperty [ a cs:MechanicalProperty ;
+            cs:propertyName "Adhesion Strength" ;
+            cs:propertyValue "18.4-76.6" ;
+            cs:propertyUnit "MPa" ;
+          ];
+      cs:hasMicrostructureResult [ a cs:MicrostructureResult ;
+          cs:featureDescription "Grain Size" ;
+          cs:featureValue "refined at splat interfaces" ;
+        ] ;
+    ] .
+
+<http://dx.doi.org/10.1016/j.apsusc.2019.144974> a cs:ColdSprayPaper ;
+    cs:hasMetadata [
+        cs:hasTitle "An in-situ study of the interface microstructure of solid-state additive deposition of AA7075 on AZ31B substrate" ;
+        cs:hasAuthor "S.K. Shaha, H. Jahed" ;
+        cs:hasJournal "Applied Surface Science" ;
+        cs:hasPublicationYear "2020"^^xsd:gYear
+    ] ;
+    cs:hasMaterial [
+        cs:hasComposition "AA7075, AZ31B" ;
+        cs:hasCondition "Cast AZ31B Mg alloy substrate, Gas atomized AA7075 powder" ;
+        cs:hasSupplier "Centerline, Windsor, Canada (AA7075 powder)" ;
+        cs:hasPhysicalProperty [
+            cs:propertyName "Powder size and shape" ;
+            cs:propertyValue "See reference [5]"
+        ]
+    ] ;
+    cs:hasPreprocessing [
+        cs:hasHeatTreatment [
+            cs:annealingTemperature "200 °C, 300 °C, 400 °C" ;
+            cs:annealingTime "1 h"
+        ]
+    ] ;
+    cs:hasColdSprayProcess [
+        cs:carrierGas "Nitrogen" ;
+        cs:gasPressure "1.4 MPa" ;
+        cs:gasPressureUnit "MPa" ;
+        cs:nozzleTemperature "400 °C" ;
+        cs:nozzleTemperatureUnit "°C"
+    ] ;
+    cs:hasCharacterization [
+        cs:techniqueName "Scanning electron microscopy (SEM)" ;
+        cs:parameter "5% HF etching"
+    ],
+    [
+        cs:techniqueName "Energy-dispersive X-ray (EDX)"
+    ],
+    [
+        cs:techniqueName "X-ray diffraction (XRD)" ;
+        cs:parameter "Bruker D8-Discover, Cu-Kα radiation, 40 kV, 40 mA, 300-µm collimator"
+    ],
+     [
+        cs:techniqueName "Transmission electron microscopy (TEM)" ;
+        cs:parameter "JEOL-2010F, 200 keV, in-situ annealing (100-400 °C)"
+    ],
+    [
+        cs:techniqueName "Nanoindentation" ;
+        cs:parameter "Micro-Material’s Nano Test Platform 3, 100 nm indenter, 500 μN/s loading rate, 30 mN max load"
+    ],
+    [
+        cs:techniqueName "Tensile tests" ;
+        cs:parameter "ASTM: E8/E8M-11"
+    ];
+    cs:hasResult [
+        cs:hasMicrostructureResult [
+            cs:featureDescription "Interfacial layer (Mg17Al12)" ;
+            cs:featureValue "200–300 nm thickness at 200 °C"
+        ],
+        [
+            cs:featureDescription "Intermetallic layers (Mg2Al3, Mg17Al12)" ;
+            cs:featureValue "Formed at 300 °C and above"
+        ]
+    ],
+    [
+        cs:hasMechanicalProperty [
+            cs:propertyName "Fracture Strength" ;
+            cs:propertyValue "130 MPa" ;
+            cs:propertyUnit "MPa"
+        ]
+    ].
+
+<10.1016/j.corsci.2017.10.033> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.corsci.2017.10.033" ;
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "Saltwater corrosion behavior of cold sprayed AA7075 aluminum alloy coatings" ;
+        cs:hasAuthor "Sieglind Ngai, Tungwai Ngai, Florian Vogel, William Story, Gregory B. Thompson, Luke N. Brewer" ;
+        cs:hasJournal "Corrosion Science" ;
+        cs:hasPublicationYear "2018"^^xsd:gYear
+    ] ;
+    cs:hasMaterial [
+        a cs:Material ;
+        cs:hasComposition "Al-5.4Zn-2.25Mg-1.54Cu-0.19Cr-0.13Si-0.02Mn-0.17%Fe (AA7075 powder)" ;
+        cs:hasCondition "gas-atomized powder" ;
+        cs:hasSupplier "Valimet, USA" ;
+        cs:hasPhysicalProperty [
+            a cs:PhysicalProperty ;
+            cs:propertyName "average particle size" ;
+            cs:propertyValue "16.6 ± 7.1" ;
+            cs:propertyUnit "μm"
+        ]
+    ], [
+        a cs:Material ;
+        cs:hasComposition "Al-Zn(5.1-6.1)-Mg(2.1-2.9)-Cu(1.2-2.0)-Cr(0.18-0.28)-Si(0.4 max)-Mn(0.3 max)-Ti(0.2 max)-Fe(0.5 max) (AA7075-T651 plate)" ;
+        cs:hasCondition "plate substrate"
+    ] ;
+    cs:hasPreprocessing [
+        a cs:Preprocessing ;
+        cs:hasPowderProduction "gas-atomization"
+    ] ;
+    cs:hasColdSprayProcess [
+        a cs:ColdSprayProcess ;
+        cs:carrierGas "He" ;
+        cs:gasPressure "2.80" ;
+        cs:gasPressureUnit "MPa" ;
+        cs:nozzleTemperature "375" ;
+        cs:nozzleTemperatureUnit "°C" ;
+        cs:standOffDistance "20" ;
+        cs:standOffDistanceUnit "mm"
+    ], [
+        a cs:ColdSprayProcess ;
+        cs:carrierGas "N2" ;
+        cs:gasPressure "3.56" ;
+        cs:gasPressureUnit "MPa" ;
+        cs:nozzleTemperature "480" ;
+        cs:nozzleTemperatureUnit "°C" ;
+        cs:standOffDistance "20" ;
+        cs:standOffDistanceUnit "mm" ;
+        cs:depositionAngle "45" ;
+        cs:depositionAngleUnit "degree"
+    ] ;
+    cs:hasCharacterization [
+        a cs:Characterization ;
+        cs:techniqueName "Scanning Electron Microscopy (SEM)" ;
+        cs:parameter "10 kV"
+    ], [
+        a cs:Characterization ;
+        cs:techniqueName "Energy Dispersive Spectroscopy (EDS)" ;
+        cs:parameter "15 kV"
+    ], [
+        a cs:Characterization ;
+        cs:techniqueName "Optical Microscopy (OM)"
+    ], [
+        a cs:Characterization ;
+        cs:techniqueName "Electrochemical Tests" ;
+        cs:parameter "0.1 M and 0.6 M NaCl solutions"
+    ], [
+        a cs:Characterization ;
+        cs:techniqueName "Immersion Tests" ;
+        cs:parameter "0.1 M and 0.6 M NaCl solutions, 7 days, 23 °C"
+    ],
+     [
+        a cs:Characterization ;
+        cs:techniqueName "Vickers Hardness" ;
+        cs:parameter "1 kg load"
+    ] ;
+    cs:hasResult [
+        a cs:Result ;
+        cs:hasMechanicalProperty [
+            a cs:MechanicalProperty ;
+            cs:propertyName "Hardness (He-CS)" ;
+            cs:propertyValue "158.8 ± 2.8" ;
+            cs:propertyUnit "HV"
+        ],  [
+            a cs:MechanicalProperty ;
+            cs:propertyName "Hardness (N-CS)" ;
+            cs:propertyValue "120.5 ± 11.6" ;
+            cs:propertyUnit "HV"
+        ],
+        [
+            a cs:MechanicalProperty ;
+            cs:propertyName "Hardness (Bulk)" ;
+            cs:propertyValue "120.5 ± 7.6" ;
+            cs:propertyUnit "HV"
+        ];
+        cs:hasMicrostructureResult [
+            a cs:MicrostructureResult ;
+            cs:featureDescription "Porosity (N-CS)" ;
+            cs:featureValue "High level of porosity, particularly pores at junctions between multiple prior particles"
+        ], [
+            a cs:MicrostructureResult ;
+            cs:featureDescription "Porosity (He-CS)" ;
+            cs:featureValue "Much more uniform and dense appearance with a very low degree of porosity"
+        ];
+        cs:porosity "N-CS coatings exhibit limited particle deformation and possess a high degree of resultant porosity, while materials sprayed with helium gas display extensive microstructural deformation and almost no porosity."
+    ] .
+
+<10.1016/j.corsci.2024.112355> a cs:ColdSprayPaper ;
+  cs:hasDOI "10.1016/j.corsci.2024.112355" ;
+  cs:hasMetadata [
+    a cs:Metadata ;
+    cs:hasTitle "Influence of powder heat treatment and particle size on the corrosion performance of cold-sprayed nickel-aluminum bronze (NAB) for repair applications" ;
+    cs:hasAuthor "Gidla Vinay, Ravi Kant, Harpreet Singh" ;
+    cs:hasJournal "Corrosion Science" ;
+    cs:hasPublicationYear "2024"^^xsd:gYear
+  ] ;
+  cs:hasMaterial [
+    a cs:Material ;
+    cs:hasComposition "Cu10Al5Fe5Ni" ;
+    cs:hasCondition "Powder" ;
+    cs:hasSupplier "CNPC POWDER" ;
+    cs:hasPhysicalProperty [
+      a cs:PhysicalProperty ;
+      cs:propertyName "Average particle size" ;
+      cs:propertyValue "35" ;
+      cs:propertyUnit "µm"
+    ]
+  ] ;
+  cs:hasPreprocessing [
+    a cs:Preprocessing ;
+    cs:hasPowderProduction "Nitrogen gas atomization" ;
+    cs:hasHeatTreatment [
+      a cs:HeatTreatment ;
+      cs:annealingTemperature "700" ;
+      cs:annealingTime "7 hours"
+    ]
+  ] ;
+  cs:hasColdSprayProcess [
+    a cs:ColdSprayProcess ;
+    cs:carrierGas "High-pressure gas" ;
+    cs:gasPressure "4" ;
+    cs:gasPressureUnit "MPa" ;
+    cs:nozzleTemperature "900" ;
+    cs:nozzleTemperatureUnit "◦C" ;
+    cs:standOffDistance "40" ;
+    cs:standOffDistanceUnit "mm" ;
+    cs:nozzleType "Divergent" ;
+    cs:nozzleDimensions "Length: 100 mm, Outlet: 7 mm (circular)" ;
+    cs:depositionAngle "90" ;
+    cs:depositionAngleUnit "degrees" ;
+    cs:scanningSpeed "100" ;
+  ] ;
+  cs:hasCharacterization [
+    a cs:Characterization ;
+    cs:techniqueName "XRD" ;
+  ] , [
+    a cs:Characterization ;
+    cs:techniqueName "XPS" ;
+  ] , [
+    a cs:Characterization ;
+    cs:techniqueName "SEM" ;
+  ] , [
+    a cs:Characterization ;
+    cs:techniqueName "EDS" ;
+  ] , [
+   a cs:Characterization;
+   cs:techniqueName "Electrochemical corrosion test";
+   cs:parameter "ASTM G59–97";
+  ] , [
+   a cs:Characterization;
+   cs:techniqueName "EIS";
+  ] , [
+   a cs:Characterization;
+   cs:techniqueName "Potentiodynamic polarization resistance tests";
+   cs:parameter "Scan rate: 1 mV/s, Potential range: -1 V to 1 V";
+  ] ;
+  cs:hasResult [
+    a cs:Result ;
+    cs:depositionEfficiency "Nearly 100" ;
+    cs:porosity "0.4-2.41" ;
+    cs:porosityUnit "%" ;
+   cs:hasMechanicalProperty [
+      a cs:MechanicalProperty ;
+      cs:propertyName "Hardness (AR Deposit)" ;
+      cs:propertyValue "350" ;
+      cs:propertyUnit "HV0.3"
+    ] , [
+      a cs:MechanicalProperty ;
+      cs:propertyName "Hardness (S2HT Deposit)" ;
+      cs:propertyValue "312" ;
+      cs:propertyUnit "HV0.3"
+    ]
+  ] .
+
+<http://dx.doi.org/10.1016j.ijfatigue.2022.107084> a cs:ColdSprayPaper ;
+    cs:hasMetadata [
+        cs:hasTitle "Fatigue crack initiation in cold spray coated AZ31B-H24 with AA7075 powder" ;
+        cs:hasAuthor "Bahareh Marzbanrad, Ehsan Toyserkani, Hamid Jahed" ;
+        cs:hasJournal "International Journal of Fatigue" ;
+        cs:hasPublicationYear "2022"^^xsd:gYear
+    ] ;
+    cs:hasMaterial [
+        cs:hasComposition "AZ31B-H24 (substrate), AA7075 (coating)" ;
+        cs:hasCondition "Sheet (substrate), Powder (coating)" ;
+        cs:hasSupplier "Centerline Ltd., Windsor, Canada (AA7075 powder)" ;
+        cs:hasPhysicalProperty [
+            cs:propertyName "Average radius (powder particles)" ;
+            cs:propertyValue "23" ;
+            cs:propertyUnit "μm"
+        ]
+    ] ;
+    cs:hasPreprocessing [
+        cs:hasHeatTreatment [
+            cs:annealingTemperature "260" ;
+            cs:annealingTime "15 min"
+        ]
+    ] ;
+    cs:hasColdSprayProcess [
+        cs:carrierGas "N2" ;
+        cs:gasPressure "1.38" ;
+        cs:gasPressureUnit "MPa" ;
+        cs:nozzleTemperature "400" ;
+        cs:nozzleTemperatureUnit "◦C" ;
+        cs:standOffDistance "12" ;
+        cs:standOffDistanceUnit "mm" ;
+        cs:nozzleLength "120" ;
+        cs:nozzleDimensions "Orifice diameter: 2 mm, Exit diameter: 6.3 mm" ;
+        cs:powderFeedRate "8" ;
+        cs:powderFeedRateUnit "gr/min" ;
+        cs:stepOver "1.2" ;
+        cs:scanningSpeed "10 (compressive), 2 (tensile)";
+        cs:scanningSpeedUnit "mm/s";
+        cs:fixtureForThermalControl "Water-cooled (compressive), Insulated (tensile)"
+    ] ;
+    cs:hasCharacterization [
+        cs:techniqueName "Hole drilling" ;
+        cs:parameter "ASTM E837-13"
+    ], [
+        cs:techniqueName "Three-point bending fatigue test" ;
+        cs:parameter "ASTM D5947"
+    ], [
+        cs:techniqueName "SEM"
+    ], [
+        cs:techniqueName "EDS"
+    ], [
+        cs:techniqueName "TEM"
+    ], [
+        cs:techniqueName "CT"
+    ], [
+        cs:techniqueName "DIC"
+    ] ;
+    cs:hasResult [
+        cs:hasMechanicalProperty [
+            cs:propertyName "Fatigue life (compressive sample at 377 MPa)" ;
+            cs:propertyValue "18000" ;
+            cs:propertyUnit "cycles"
+        ] ;
+       cs:hasMechanicalProperty [
+            cs:propertyName "Fatigue life (uncoated sample at 377 MPa)" ;
+            cs:propertyValue "4000" ;
+            cs:propertyUnit "cycles"
+        ];
+        cs:hasMicrostructureResult [
+            cs:featureDescription "Nano-size interlayer thickness (tensile sample)" ;
+            cs:featureValue "360" ;
+            cs:featureUnit "nm"
+        ] ;
+        cs:hasMicrostructureResult [
+            cs:featureDescription "Nano-size interlayer thickness (compressive sample)" ;
+            cs:featureValue "87" ;
+            cs:featureUnit "nm"
+        ];
+        cs:porosity "Not explicitly stated, but inferred from the presence of voids at grain boundaries" ;
+        cs:porosityUnit "Qualitative"
+    ] .
+
+<http://doi.org/10.1016/j.ijfatigue.2022.107256> a cs:ColdSprayPaper ;
+    cs:hasMetadata [
+        cs:hasTitle "Effect of powder heat treatment on fatigue mechanisms of freestanding AA7075 cold spray deposits" ;
+        cs:hasAuthor "C.J. Williamson, A.R. Webb, L.N. Brewer, P.G. Allison, J.B. Jordon" ;
+        cs:hasJournal "International Journal of Fatigue" ;
+        cs:hasPublicationYear "2023"^^xsd:gYear
+    ] ;
+    cs:hasMaterial [
+        cs:hasComposition "AA7075" ;
+        cs:hasCondition "as-atomized powder" ;
+        cs:hasCondition "overaged powder" ;
+        cs:hasCondition "solutionized powder" ;
+    ] ;
+    cs:hasPreprocessing [
+        cs:hasHeatTreatment [
+            a cs:HeatTreatment;
+            cs:annealingTemperature "480" ;
+            cs:annealingTemperatureUnit "°C";
+            cs:annealingTime "4" ;
+            cs:annealingTimeUnit "h"
+        ]
+    ] ;
+    cs:hasColdSprayProcess [
+        cs:carrierGas "Helium" ;
+        cs:gasPressure "3.45" ;
+        cs:gasPressureUnit "MPa" ;
+        cs:nozzleTemperature "450" ;
+        cs:nozzleTemperatureUnit "◦C" ;
+        cs:standOffDistance "15" ;
+        cs:standOffDistanceUnit "mm" ;
+        cs:powderFeedRate "8.2" ;
+        cs:powderFeedRateUnit "g/min" ;
+        cs:scanningSpeed "200";
+        cs:scanningSpeedUnit "mm/s"
+    ] ;
+    cs:hasCharacterization [
+        cs:techniqueName "Tensile Test" ;
+        cs:parameter "ASTM standard"
+    ] ;
+        cs:hasCharacterization [
+        cs:techniqueName "Fatigue testing" ;
+        cs:parameter "Stress-controlled fatigue tests at 40Hz with a sine wave profile at a load ratio of R = -1"
+    ] ;
+   cs:hasCharacterization [
+        cs:techniqueName "Scanning electron microscope (SEM)"
+    ] ;
+   cs:hasCharacterization [
+        cs:techniqueName "Metallographic specimens"
+    ] ;
+   cs:hasCharacterization [
+        cs:techniqueName "optical microscope"
+    ] ;
+    cs:hasResult [
+        cs:porosity "0.92" ;
+        cs:porosityUnit "%" ;
+        cs:hasMechanicalProperty [
+            cs:propertyName "Yield Strength" ;
+            cs:propertyValue "372.5" ;
+            cs:propertyUnit "MPa"
+        ]
+    ] ;
+        cs:hasResult [
+        cs:porosity "0.21" ;
+        cs:porosityUnit "%" ;
+        cs:hasMechanicalProperty [
+            cs:propertyName "Yield Strength" ;
+            cs:propertyValue "278.3" ;
+            cs:propertyUnit "MPa"
+       ]
+    ] ;
+       cs:hasResult [
+        cs:porosity "0.45" ;
+        cs:porosityUnit "%" ;
+        cs:hasMechanicalProperty [
+            cs:propertyName "Yield Strength" ;
+            cs:propertyValue "367.4" ;
+            cs:propertyUnit "MPa"
+        ]
+    ] .
+
+
+
+
+
+<https://doi.org/10.1016/j.ijheatmasstransfer.2023.124817> a cs:ColdSprayPaper ;
+    cs:hasDOI "10.1016/j.ijheatmasstransfer.2023.124817" ;
+
+    # 1. Paper Metadata
+    cs:hasMetadata [
+        a cs:Metadata ;
+        cs:hasTitle "A novel cold spray process flow technique - a numerical investigation" ;
+        cs:hasAuthor "Kamil Kowalski, Przemysław Błasiak, Sławomir Pietrowicz" ;
+        cs:hasJournal "International Journal of Heat and Mass Transfer" ;
+        cs:hasPublicationYear "2024"^^xsd:gYear
+    ] ;
+
+    # 2. Computational Study Details
+    cs:hasComputationalStudy [
+        a cs:ComputationalStudy ;
+        cs:usesSoftware "Ansys Fluent" ;
+        cs:modelsMaterial "Copper (Particle)" ;
+        cs:modelsMaterial "Air (Working Gas)" ;
+        cs:modelsMaterial "Aluminum (Substrate)" ;
+
+        # 2.1 Numerical Approach
+        cs:hasNumericalApproach [
+            a cs:NumericalApproach ;
+            cs:approachType "Computational Fluid Dynamics (CFD); RNG k-epsilon turbulence model; Discrete Phase Model (DPM)" ;
+            cs:dimensionality "3D" ;
+            cs:simulationFocus "Gas flow dynamics and particle deposition rates (accretion rates) for classical and novel nozzle supply methods" ;
+
+            # 2.2 Approach Details
+            cs:hasApproachDetail [
+                a cs:ApproachDetails ;
+                cs:fluidDynamicsModel "RNG k-epsilon turbulence model with non-equilibrium wall functions; Ideal gas law for air" ;
+                cs:thermalTransportModel "Ranz and Marshall formula for convective heat transfer coefficient" ;
+                cs:depositionCriterion "Critical Velocity criterion implemented via User Defined Function (UDF)" ;
+                cs:meshRefinementTechnique "Mesh independence study conducted across five grids; selection based on air velocity convergence along the nozzle axis" ;
+                cs:meshResolution "211,233 tetrahedral elements (basic method); 222,620 tetrahedral elements (novel methods)" ;
+                cs:particleBoundaryCondition "20 µm diameter spherical copper particles; initial temperature 298 K; mass flow rate 0.00083 kg/s" ;
+                cs:substrateBoundaryCondition "Inlet mass flow 0.07 kg/s; gas temperature 623 K; outlet ambient pressure 0.101 MPa" ;
+                cs:contactInteractionMethod "One-way coupling; elastic rebound assumed if impact velocity is below critical velocity" ;
+
+                # 2.3 Model Constants
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Copper Density" ;
+                    cs:parameterValue "8978" ;
+                    cs:parameterUnit "kg/m3"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Copper Specific Heat Capacity" ;
+                    cs:parameterValue "381" ;
+                    cs:parameterUnit "J/(kg K)"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Copper Tensile Strength" ;
+                    cs:parameterValue "220" ;
+                    cs:parameterUnit "MPa"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Copper Melting Temperature" ;
+                    cs:parameterValue "1357" ;
+                    cs:parameterUnit "K"
+                ] ;
+                cs:hasModelingConstant [
+                    a cs:ModelConstant ;
+                    cs:parameterName "Air Specific Heat Capacity" ;
+                    cs:parameterValue "1006.43" ;
+                    cs:parameterUnit "J/(kg K)"
+                ]
+            ]
+        ] ;
+
+        # 3. Modeling Outcome
+        cs:hasModelingOutcome [
+            a cs:ModelingOutcome ;
+            cs:predictedPhenomena "Vortex motion induces centrifugal forces repelling particles toward the nozzle walls" ;
+            cs:predictedPhenomena "Combined method produces a cone-shaped spray pattern with the highest particle intensity in the center" ;
+            cs:predictedPhenomena "Formation of Mach cones and oblique shock waves at the nozzle outlet leading to energy losses" ;
+            cs:predictedPhenomena "Basic and combined methods yield accretion rate distributions resembling a Gaussian distribution" ;
+
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum Accretion Rate (Combined Method)" ;
+                cs:metricValue "33.6" ;
+                cs:metricUnit "kg/m2" ;
+                cs:atInletCondition "Gas temperature 623 K; Mass flow 0.07 kg/s"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum Accretion Rate (Basic Method)" ;
+                cs:metricValue "18.1" ;
+                cs:metricUnit "kg/m2"
+            ] ;
+            cs:predictedMetric [
+                a cs:QuantitativePrediction ;
+                cs:metricName "Maximum Accretion Rate (Vortex Method)" ;
+                cs:metricValue "10.7" ;
+                cs:metricUnit "kg/m2"
+            ]
+        ]
+    ] ;
+
+    # 4. Experimental Validation Status
+    cs:hasExperimentalValidation [
+        a cs:ExperimentalValidation ;
+        cs:isExperimentConducted "false"^^xsd:boolean ;
+        cs:validationMethod "Comparison of gas temperature, gas velocity, and particle velocity distributions against existing literature data (Yin et al.)" ;
+        cs:validationTarget "Particle velocity and gas flow characteristics across different inlet pressures (2.5 MPa, 2.6 MPa, 3.0 MPa)"
+    ] .
