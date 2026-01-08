@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 from scipy.optimize import fsolve
 from scipy.optimize import brentq
-import sympy as sp
+
 
 # --- Streamlit UI Setup ---
 current_dir = os.path.dirname(__file__)
