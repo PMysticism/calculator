@@ -49,7 +49,7 @@ left, mid, right = st.columns([9, 1, 1])
 with left:
     col1, col2, col3, col4 = st.columns([1.3, 3, 3, 1.5])
     with col1:
-        st.page_link("Home.py", label= "Database")
+        st.page_link("main.py", label= "Database")
 
     with col2:
         st.page_link("pages/Calculator.py", label="Critical Velocity Calculator")
