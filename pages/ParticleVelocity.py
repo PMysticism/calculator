@@ -54,7 +54,7 @@ st.markdown("""
 
 
 # Optional: Top navigation using st.page_link
-left, mid, right = st.columns([9, 1, 1])
+left, mid, right = st.columns([40, 1, 1])
 
 with left:
     col1, col2, col3, col4 = st.columns([1.1, 2.7, 2.7, 1.5])
