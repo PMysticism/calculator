@@ -1,81 +1,66 @@
 import streamlit as st
+from SPARQLWrapper import SPARQLWrapper, JSON
+from rdflib import Graph
+import pandas as pd
 import os
-import math
-import numpy as np
-import matplotlib.pyplot as plt
+
 
 current_dir = os.path.dirname(__file__)
-
-MATERIAL_DB = {
-    "Copper (Cu)": {
-        "rho": 8.96,  # Density (g/cm³)
-        "Tm": 1083,   # Melting Temp (°C)
-        "Cp": 384, # Specific Heat Capacity (J/Kg per K)
-        "B": 140, # Bulk Modulus (GPA)
-        "su_default": 220,  # Ultimate Strength (MPa) - Default
-        "Ti_default": 320,  # Initial Temp (°C) - Default
-        "Tp_default": 26.85, # Particle Imact Temp (°C) - Default
-        "d_default": 20, # Particle Diameter (μm) - Default
-        "k1_default": 0.6, #A particle-size-dependent fitting parameter, used in vcr formula (Dimensionless) - Default
-        "gamma_default": 230, #A material-dependent model parameter that incorporates correlation between spall strength and tensile strength (μm^0.19) - Default
-    },
-    "Aluminum (Al)": { 
-        "rho": 2.70,  # Density (g/cm³)
-        "Tm": 660,    # Melting Temp (°C)
-        "Cp": 890, # Specific Heat Capacity (J/Kg per K)
-        "B": 75, # Bulk Modulus (GPA)
-        "su_default": 110,   # Ultimate Strength (MPa) - Default
-        "Ti_default": 20,    # Initial Temp (°C) - Default
-        "Tp_default": 0.0, # Particle Imact Temp (°C) - Default
-        "d_default": 20, # Particle Diameter (μm) - Default
-        "k1_default": 0.55, # A particle-size-dependent fitting parameter, used in vcr formula (Dimensionless) - Default
-        "gamma_default": 230, #A material-dependent model parameter that incorporates correlation between spall strength and tensile strength (μm^0.19) - Default
-    }
-}
-
-# --- Critical Velocity Calculation Functions ---
-def calculate_critical_velocity_1(rho, Tm, su, Ti):
-    """
-    Calculates critical velocity (v_cr) in m/s using the formula:
-    v_cr = 667 - 14*rho + 0.08*Tm + 0.1*su - 0.4*Ti
-    where units are: rho (g/cm³), Tm (°C), su (MPa), Ti (°C)
-    """
-    
-    v_cr = 667 - (14 * rho) + (0.08 * Tm) + (0.1 * su) - (0.4 * Ti)
-    return v_cr
-
-def calculate_critical_velocity_2(k1, Cp, rho, Tm, Tp, su):
-    """
-    Calculates critical velocity (v_cr) in m/s using the formula:
-    v_cr = k1*sqrt(Cp*(Tm-Tp) + 16*su/rho*((Tm - Tp)/(Tm - 293)))
-    where units are: Cp (J/kg per K), rho (Kg/m³), Tm (K), su (Pa), Tp (K), k1 (dimensionless)
-    """
-    
-    v_cr = k1*math.sqrt(Cp*((Tm + 273.15) - (Tp + 273.15)) + 16*((su*1000000)/(rho*1000))*(((Tm + 273.15) - (Tp + 273.15))/((Tm + 273.15) - 293)))
-    return v_cr
-
-def calculate_critical_velocity_3(gamma, su, B, rho, Tm, Tp, d):
-    """
-    Calculates critical velocity (v_cr) in m/s using the formula:
-    v_cr = gamma*(su/B)*sqrt(B/(rho*1000))*(((Tm - Tp)/(Tm - 20.0))^0.5)*(1/(d^0.19))
-    where units are: gamma (μm^0.19), su (MPa), B (GPa), rho (Kg/m³), Tm (°C) , Tp (°C), d (μm)
-    """
-    
-    #v_cr = gamma*(su/B)*math.sqrt(B/(rho*1000))*(((Tm - Tp)/(Tm - 20))**0.5)*(1/(d**0.19))
-    v_cr = gamma*((su*10**6)/(B*10**9))*math.sqrt((B*10**9)/(rho*1000))*(((Tm - Tp)/(Tm - 20))**0.5)*(d**(-0.19))
-    
-    return v_cr
-# --- Streamlit UI Setup ---
+uni_path = os.path.join(current_dir, "logo.png")
+image_path = os.path.join(current_dir, "logo3.jpeg")
 logo_path = os.path.join(current_dir, "logo4.png")
-uni_path = os.path.join(current_dir, "calculator_logo.png")
+file_path = os.path.join(current_dir, "database4_example.ttl")
+
+
+prologue_text = "SELECT DISTINCT ?Year ?DOI ?Title "
+coldspray_text =""
+custom_results = ""
+author_query = ""
+query_mic_results = [""]
+query_mech_results = [""]
+approach_query = ""
+numerical_query = ""
+experimental_query = ""
+dim_query = ""
+cons_query = ""
+soft_query = ""
+mesh_query = ""
+constant_query = ""
+
+selected_materials_query = "any" 
+selected_model_materials_query = "any"
+selected_preprocessing_query = "any"
+selected_characterization_query = "any" 
+selected_mic_result_query = 0
+selected_mech_result_query = 0
+
 
 st.set_page_config(
-    page_title="Critical Velocity Calculator",        
+    page_title="Cold Spray Hub",        
     page_icon= logo_path,                  
     layout="centered",                   
     initial_sidebar_state="expanded",
     menu_items = {'About': 'This is a tool desined and provided by ## University of Waterloo ## and ##University of Ottowa##'} 
 )
+
+# Optional: Top navigation using st.page_link
+left, mid, right = st.columns([9, 1, 1])
+
+with left:
+    col1, col2, col3, col4 = st.columns([1.3, 3, 3, 1.5])
+    with col1:
+        st.page_link("Home.py", label= "Database")
+
+    with col2:
+        st.page_link("pages/Calculator.py", label="Critical Velocity Calculator")
+    
+    with col3:
+        st.page_link("pages/ParticleVelocity.py", label="Particle Velocity Calculator")
+
+    with col4:
+        st.page_link("pages/Submit.py", label="Your Contribution")
+
+
 
 st.markdown("""
     <style>
@@ -106,222 +91,977 @@ st.markdown("""
 
 """, unsafe_allow_html=True)
 
+#st.markdown('<div class="title-font">Cold Spray Hub</div>', unsafe_allow_html=True)
+#st.markdown('<div class="subtitle-font">(Cold Spray Additive Manufacturing Database)</div>', unsafe_allow_html=True)
+
+
+@st.cache_resource
+def load_graph(ttl_path):
+    g = Graph()
+    g.parse(ttl_path, format="ttl")
+    return g
+
+def run_query(g, query):
+    results = g.query(query)
+    rows = []
+    for row in results:
+        rows.append([str(cell) for cell in row])
+    cols = results.vars
+    return pd.DataFrame(rows, columns=[str(c) for c in cols])
+
+#st.title("Cold Spray Database")
 st.image(uni_path, width=600, output_format="auto")
 
+#ttl_file = st.file_uploader("Upload RDF file", type=["ttl"])
+ttl_file = file_path
 
-# 1. Material Selection
-st.sidebar.header("Parameter Selection")
-material_name = st.sidebar.selectbox(
-    "Select Material",
-    list(MATERIAL_DB.keys())
-)
+if ttl_file is not None:
+    g = load_graph(ttl_file)
 
-material_data = MATERIAL_DB[material_name]
+    ################################################################Numerical
+    query_model_materials = {
+        "any":"""""",
+        "Aluminum and Aluminum Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasComputationalStudy ?comp .
+    ?comp cs:modelsMaterial ?Model_Material .
+                
+    
+    FILTER (regex(?Model_Material, "Al|Aluminum|aluminum"))
+        """
+,
+        "Copper and Copper Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasComputationalStudy ?comp .
+    ?comp cs:modelsMaterial ?Model_Material .
 
-# Load fixed material parameters
-rho = material_data["rho"]
-Tm = material_data["Tm"]
-Cp = material_data["Cp"]
-B = material_data["B"]
-su_default = material_data["su_default"]
-Ti_default = material_data["Ti_default"]
-Tp_default = material_data["Tp_default"]
-d_default = material_data["d_default"]
-k1_default = material_data["k1_default"]
-gamma_default = material_data["gamma_default"]
+    FILTER (regex(?Model_Material, "Cu|Copper|copper"))
+        """,
+        "Nickel and Nickel Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasComputationalStudy ?comp .
+    ?comp cs:modelsMaterial ?Model_Material .
 
+    FILTER (regex(?Model_Material, "Ni|Nickel|nickel"))
+        """,
+        "Titanium and Titanium Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasComputationalStudy ?comp .
+    ?comp cs:modelsMaterial ?Model_Material .
 
-# Display fixed material parameters in the sidebar
-st.sidebar.markdown(f"**Fixed Material Properties:**")
-st.sidebar.metric("Density ($ρ$)", f"{rho} g/cm³")
-st.sidebar.metric("Melting Temperature ($T_m$)", f"{Tm} °C")
-st.sidebar.metric("Specific Heat Capacity ($C_p$)", f"{Cp} J/Kg per K")
-st.sidebar.metric("Bulk Modulus ($B$)", f"{B} GPa")
+    FILTER (regex(?Model_Material, "Ti|Titanium|titanium"))
+        """,
+        "Iron and Steel Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasComputationalStudy ?comp .
+    ?comp cs:modelsMaterial ?Model_Material .
 
-# Initial Particle Temperature (Ti)
-Ti = st.sidebar.slider(
-    "Initial Particle Temperature ($T_i$) in °C:", 
-    min_value=20, 
-    max_value=500, 
-    value=Ti_default,
-    help="Higher initial temperature decreases the critical velocity."
-)
+    FILTER (regex(?Model_Material, "Fe|Iron|Steel|iron|steel"))
+        """,
+        "Magnesium and Magnesium Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasComputationalStudy ?comp .
+    ?comp cs:modelsMaterial ?Model_Material .
 
-# Particle Impact Temperature (Tp)
-Tp = st.sidebar.slider(
-    "Particle Impact Temperature ($T_p$) in °C:", 
-    min_value=20.0, 
-    max_value=500.0, 
-    value=Tp_default,
-    help="Higher impact temperature decreases the critical velocity."
-)
+    FILTER (regex(?Model_Material, "Mg|Magnesium|magnesium"))
+        """,
+        "Carbides":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasComputationalStudy ?comp .
+    ?comp cs:modelsMaterial ?Model_Material .
 
-# Ultimate Strength (su)
-su = st.sidebar.slider(
-    "Ultimate Strength ($σ_u$) in MPa:", 
-    min_value=50, 
-    max_value=600, 
-    value=su_default,
-    help="Higher ultimate strength increases the critical velocity."
-)
+    FILTER (regex(?Model_Material, "SiC|WC|CBN|Carbide|carbide"))
+        """,
+        "Keyword Search":"""
 
-# Particle Diameter (μm)
-d = st.sidebar.slider(
-    "Particle Diameter ($d$) in μm:", 
-    min_value=1, 
-    max_value=100, 
-    value=d_default,
-    help="Higher particle diameter decreases the critical velocity."
-)
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasComputationalStudy ?comp .
+    ?comp cs:modelsMaterial ?Model_Material .
 
-# particle-size-dependent fitting parameter (k1)
-k1 = st.sidebar.slider(
-    "Particle-size-dependent fitting parameter (k1)", 
-    min_value=0.1, 
-    max_value=0.7, 
-    value=k1_default,
-    help="."
-)
+    FILTER (regex(?Model_Material, "keyword"))
 
-# material-dependent model parameter (gamma)
-gamma = st.sidebar.slider(
-    "Material-dependent parameter correlating spall and tensile strengths (γ)", 
-    min_value=50, 
-    max_value=500, 
-    value=gamma_default,
-    help="A material-dependent model parameter that incorporates correlation between spall strength and tensile strength."
-)
-#------------------------------------------------------------------------from [1]
-# Calculation and Result Display
-v_cr_calculated_1 = calculate_critical_velocity_1(rho, Tm, su, Ti)
-
-st.divider()
-
-st.markdown(f"#### Calculated Critical Velocity based on Assadi et al. (2003)[1]")
-st.metric(
-    "Critical Velocity ($\mathbf{v_{cr}}$)", 
-    f"{v_cr_calculated_1:.2f} m/s"
-)
-
-# Formula Display
-st.markdown(f"**Formula Used [1]:**")
-st.latex(r"v_{cr} = 667 - 14\rho + 0.08T_m + 0.1\sigma_u - 0.4T_i")
-st.latex(f"       = 667 - 14×{rho} + 0.08×{Tm} + 0.1×{su} - 0.4×{Ti}")
-st.latex(f"       = {v_cr_calculated_1:.2f}  m/s")
-st.markdown(f"Where:")
-st.markdown(f"- $ρ$ = {rho} g/cm³")
-st.markdown(f"- $T_m$ = {Tm} °C")
-st.markdown(f"- $σ_u$ = {su} MPa (Adjustable)")
-st.markdown(f"- $T_i$ = {Ti} °C (Adjustable)")
-
-#------------------------------------------------------------------------from [2]
-# Calculation and Result Display
-v_cr_calculated_2 = calculate_critical_velocity_2(k1, Cp, rho, Tm, Tp, su)
-
-st.divider()
-
-st.markdown(f"#### Calculated Critical Velocity based on Assadi et al. (2011)[2]")
-st.metric(
-    "Critical Velocity ($\mathbf{v_{cr}}$)", 
-    f"{v_cr_calculated_2:.2f} m/s"
-)
-
-# Formula Display k1*sqrt(Cp*(Tm-Tp) + 16*su/rho*((Tm - Tp)/(Tm - 293)))
-st.markdown(f"**Formula Used [2]:**")
-st.latex(r"v_{cr} = k_1 \sqrt{ C_p (T_m - T_p) + \frac{16\, \sigma_u}{\rho} \left( \frac{T_m - T_p}{T_m - 293} \right) }")
-st.latex(
-    fr"= {k1} \sqrt{{ {Cp} ({Tm+273.15} - {Tp+273.15}) + \frac{{16\, × {su*1000000}}}{{{rho*1000}}} \left( \frac{{{Tm+273.15} - {Tp+273.15}}}{{{Tm+273.15} - 293}} \right) }}"
-)
-st.latex(f"       = {v_cr_calculated_2:.2f}  m/s")
-
-st.markdown(f"Where:")
-st.markdown(f"- $ρ$ = {rho*1000} Kg/m³")
-st.markdown(f"- $C_p$ = {Cp} J/Kg per K")
-st.markdown(f"- $T_m$ = {Tm+273.15} K")
-st.markdown(f"- $T_p$ = {Tp+273.15} K")
-st.markdown(f"- $σ_u$ = {su*10^6} Pa (Adjustable)")
-st.markdown(f"- $k_1$ = {k1} (Adjustable)")
-
-#------------------------------------------------------------------------from [3]
-# Calculation and Result Display
-v_cr_calculated_3 = calculate_critical_velocity_3(gamma, su, B, rho, Tm, Tp, d)
-
-st.divider()
-
-st.markdown(f"#### Calculated Critical Velocity based on Hassani et al. (2016)[3] and Zhang et al. (2025)[4]")
-st.metric(
-    "Critical Velocity ($\mathbf{v_{cr}}$)", 
-    f"{v_cr_calculated_3:.2f} m/s"
-)
-
-# Formula Display gamma*(su/B)*sqrt(B/(rho*1000))*(((Tm - Tp)/(Tm - 20))^0.5)*(1/(d^0.19))
-st.markdown(f"**Formula Used [4]:**")
-st.latex(r"""
-v_{cr} = \gamma \left(\frac{\sigma_u}{B}\right)
-\sqrt{\frac{B}{\rho}}
-\left(\frac{T_m - T_p}{T_m - T_{room}}\right)^{m}
-\frac{1}{d^{n}}
-""")
-st.latex(
-    fr"""
- = {gamma} \left( \frac{{{su}}}{{{B}}} \right)
-\sqrt{{ \frac{{{B}}}{{{rho}}} }}
-\left( \frac{{{Tm} - {Tp}}}{{{Tm} - 20}} \right)^{{0.5}}
-\frac{{1}}{{ d^{{0.19}} }}
-"""
-)
+""",
+    }
 
 
-st.latex(f"       = {v_cr_calculated_3:.2f}  m/s")
 
-st.markdown(f"Where:")
-st.markdown(f"- $ρ$ = {rho*1000} Kg/m³")
-st.markdown(f"- $B$ = {B} GPa")
-st.markdown(f"- $T_m$ = {Tm} °C")
-st.markdown(f"- $T_p$ = {Tp} °C")
-st.markdown(f"- $T_{{room}}$ = 20 °C")
-st.markdown(f"- $σ_u$ = {su} MPa (Adjustable)")
-st.markdown(f"- $d$ = {d} μm (Adjustable)")
-st.markdown(f"- $γ$ = {gamma} (Adjustable)")
-st.markdown(f"- $m \; \\text{{(constant representing power-law dependency on temperature)}}$ = 0.5")
-st.markdown(f"- $n \; \\text{{(constant representing power-law relationship with particle diameter)}}$ = 0.19")
+    ################################################################End of Numerical
 
-st.divider()
-#--------------------------Plot
-st.markdown(f"#### Model Comparison: Critical Velocity as a Function of Parameter")
-#variables = {"rho" : rho, "Tm" : Tm, "Cp" : Cp, "B" : B, "Ti" : Ti, "Tp" : Tp, "su" : su, "d" : d, "k1" : k1, "gamma" : gamma}
-variables = {"ρ" : rho, "Tm" : Tm, "Cp" : Cp, "B" : B, "Ti" : Ti, "Tp" : Tp, "σu" : su, "d" : d, "k1" : k1, "γ" : gamma}
-variables_text = {"ρ" : "ρ", "Tm" : "$T_m$","Cp" :"$C_p$", "B" : "B", "Ti" : "$T_i$", "Tp" : "$T_p$", "σu" :"$σ_u$", "d" : "d", "k1" : "$k_1$", "γ" : "γ"}
-var_text = st.selectbox("Select parameter to vary:", variables)
-var_to_vary = variables[var_text]
-var_range = st.slider(f"Select a range of values for {variables_text[var_text]}", var_to_vary/2, 3*var_to_vary/2, (3*var_to_vary/4, 5*var_to_vary/4))
-var_min, var_max = var_range
-x = np.linspace(var_min, var_max, 200)
+    query_materials = {
+        "any":"""""",
+        "Aluminum and Aluminum Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasMaterial ?material .
+    ?material cs:hasCondition ?Material_Condition ;
+                cs:hasComposition ?Composition .
+    
+    FILTER (regex(?Composition, "Al|Aluminum|aluminum"))
+        """
+,
+        "Copper and Copper Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasMaterial ?material .
+    ?material cs:hasCondition ?Material_Condition ;
+                cs:hasComposition ?Composition .
 
-vcr1_vals = []
-vcr2_vals = []
-vcr3_vals = []
+    FILTER (regex(?Composition, "Cu|Copper|copper"))
+        """,
+        "Nickel and Nickel Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasMaterial ?material .
+    ?material cs:hasCondition ?Material_Condition ;
+                cs:hasComposition ?Composition .
 
-for val in x:
-    variables[var_text] = val
-    vcr1_vals.append(calculate_critical_velocity_1(variables["ρ"], variables["Tm"], variables["σu"], variables["Ti"]))
-    vcr2_vals.append(calculate_critical_velocity_2(variables["k1"], variables["Cp"], variables["ρ"], variables["Tm"], variables["Tp"], variables["σu"]))
-    vcr3_vals.append(calculate_critical_velocity_3(variables["γ"], variables["σu"], variables["B"], variables["ρ"], variables["Tm"], variables["Tp"], variables["d"]))
+    FILTER (regex(?Composition, "Ni|Nickel|nickel"))
+        """,
+        "Titanium and Titanium Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasMaterial ?material .
+    ?material cs:hasCondition ?Material_Condition ;
+                cs:hasComposition ?Composition .
 
-fig, ax = plt.subplots()
-ax.plot(x, vcr1_vals, "b", label = "Assadi et al. (2003)[1]")
-ax.plot(x, vcr2_vals, "r", label = "Assadi et al. (2011)[2]")
-ax.plot(x, vcr3_vals, "k", label = "Zhang et al. (2025)[4]")
-ax.set_xlabel(variables_text[var_text])
-ax.set_ylabel("Critical Velocity (m/s)")
-ax.set_title(f"Critical Velocity vs {variables_text[var_text]}")
-ax.legend()
+    FILTER (regex(?Composition, "Ti|Titanium|titanium"))
+        """,
+        "Iron and Steel Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasMaterial ?material .
+    ?material cs:hasCondition ?Material_Condition ;
+                cs:hasComposition ?Composition .
 
-st.pyplot(fig)
+    FILTER (regex(?Composition, "Fe|Iron|Steel|iron|steel"))
+        """,
+        "Magnesium and Magnesium Alloys":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasMaterial ?material .
+    ?material cs:hasCondition ?Material_Condition ;
+                cs:hasComposition ?Composition .
 
-#--------------------------
-st.divider()
-st.caption("[1] Hamid Assadi, Frank Gärtner, Thorsten Stoltenhoff, Heinrich Kreye, Bonding mechanism in cold gas spraying, Acta materialia, 51(15), 4379-4394, 2003.")
-st.caption("[2] Hamid Assadi, T Schmidt, H Richter, J-O Kliemann, K Binder, F Gärtner, T Klassen, H Kreye, On parameter selection in cold spraying, Journal of thermal spray technology, 20(6), 1161-1176, 2011.")
-st.caption("[3] Mostafa Hassani-Gangaraj, David Veysset, Keith A. Nelson, Christopher A. Schuh, Supersonic Impact of Metallic Micro-particles, arXiv preprint, arXiv:1612.08081, 2016.")
-st.caption("[4] Che Zhang, Tesfaye Molla, Christian Brandl, Jarrod Watts, Rick Mccully, Caixian Tang, Graham Schaffer, Critical velocity and deposition efficiency in cold spray: A reduced-order model and experimental validation, Journal of Manufacturing Processes, 134, 547-557, 2025.")
+    FILTER (regex(?Composition, "Mg|Magnesium|magnesium"))
+        """,
+        "Carbides":"""
+        
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasMaterial ?material .
+    ?material cs:hasCondition ?Material_Condition ;
+                cs:hasComposition ?Composition .
+
+    FILTER (regex(?Composition, "SiC|WC|CBN|Carbide|carbide"))
+        """,
+        "Keyword Search":"""
+
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasMaterial ?material .
+    ?material cs:hasCondition ?Material_Condition ;
+                cs:hasComposition ?Composition .
+
+    FILTER (regex(?Composition, "keyword"))
+
+""",
+    }
+
+
+    query_preprocessing = {
+        "any":"""""",
+        "Heat Treatment":"""
+        
+            ?paper cs:hasPreprocessing ?preprocessing .
+  ?preprocessing cs:hasHeatTreatment ?heatTreatment .
+  ?heatTreatment cs:annealingTemperature ?annealingTemperature .
+  ?heatTreatment cs:annealingTime ?annealingTime .
+  BIND(CONCAT(STR(?annealingTemperature), ", ", STR(?annealingTime)) AS ?Preprocessing_Method)
+        """,
+
+        "Powder Production":"""
+        
+            ?paper cs:hasPreprocessing ?preprocessing .
+  ?preprocessing cs:hasPowderProduction ?Preprocessing_Method .
+  
+        """,
+
+        "Substrate Preparation":"""
+        
+            ?paper cs:hasPreprocessing ?preprocessing .
+  ?preprocessing cs:hasSubstratePreparation ?Preprocessing_Method .
+
+        """,
+        
+    }
+
+    query_characterization = {
+        "any":"""""",
+        "Scanning Electron Microscopy":"""
+        
+            ?paper cs:hasCharacterization ?characterization .
+  ?characterization cs:techniqueName ?techniqueName .
+  FILTER (regex(?techniqueName, "SEM"))
+  ?characterization cs:parameter ?parameter .
+  BIND(CONCAT(?techniqueName," : ", STR(?parameter)) AS ?Characterization_Method)
+  
+        """,
+        "Transmission Electron Microscopy":"""
+        
+            ?paper cs:hasCharacterization ?characterization .
+  ?characterization cs:techniqueName ?techniqueName .
+  FILTER (regex(?techniqueName, "TEM"))
+  ?characterization cs:parameter ?parameter .
+  BIND(CONCAT(?techniqueName," : ", STR(?parameter)) AS ?Characterization_Method)
+  
+        """,
+        "Light Optical Microscopy":"""
+        
+            ?paper cs:hasCharacterization ?characterization .
+  ?characterization cs:techniqueName ?techniqueName .
+  FILTER (regex(?techniqueName, "LOM|Light Optical Microscopy"))
+  ?characterization cs:parameter ?parameter .
+  BIND(CONCAT(?techniqueName," : ", STR(?parameter)) AS ?Characterization_Method)
+  
+        """,
+        "Electron Backscatter Diffraction":"""
+        
+            ?paper cs:hasCharacterization ?characterization .
+  ?characterization cs:techniqueName ?techniqueName .
+  FILTER (regex(?techniqueName, "EBSD"))
+  ?characterization cs:parameter ?parameter .
+  BIND(CONCAT(?techniqueName," : ", STR(?parameter)) AS ?Characterization_Method)
+  
+        """,
+        "Energy-dispersive X-ray":"""
+        
+            ?paper cs:hasCharacterization ?characterization .
+  ?characterization cs:techniqueName ?techniqueName .
+  FILTER (regex(?techniqueName, "EDS|EDX|EDAX"))
+  ?characterization cs:parameter ?parameter .
+  BIND(CONCAT(?techniqueName," : ", STR(?parameter)) AS ?Characterization_Method)
+  
+        """,
+        "X-ray Diffraction":"""
+        
+            ?paper cs:hasCharacterization ?characterization .
+  ?characterization cs:techniqueName ?techniqueName .
+  FILTER (regex(?techniqueName, "XRD"))
+  ?characterization cs:parameter ?parameter .
+  BIND(CONCAT(?techniqueName," : ", STR(?parameter)) AS ?Characterization_Method)
+  
+        """,
+        "X-ray Photoelectron Spectroscopy":"""
+        
+            ?paper cs:hasCharacterization ?characterization .
+  ?characterization cs:techniqueName ?techniqueName .
+  FILTER (regex(?techniqueName, "XPS"))
+  ?characterization cs:parameter ?parameter .
+  BIND(CONCAT(?techniqueName," : ", STR(?parameter)) AS ?Characterization_Method)
+  
+        """,
+
+        
+    }
+
+
+    custom_author_query =  st.text_input("Author Search:")
+    custom_doi_query =  st.text_input("DOI Search:")
+    paper_type = st.selectbox("Select the type of study", ["any", "Experimental", "Numerical"])
+    if paper_type == "Experimental":
+        numerical_query = """
+
+                ?paper a cs:ColdSprayPaper ;
+                    cs:hasColdSprayProcess ?y .
+
+                """
+        with st.expander(f"#### Advanced Search", expanded = True):
+            selected_materials_query = st.selectbox("Material", ["any", "Aluminum and Aluminum Alloys", "Copper and Copper Alloys", "Nickel and Nickel Alloys", "Titanium and Titanium Alloys", "Iron and Steel Alloys", "Magnesium and Magnesium Alloys", "Carbides", "Keyword Search"])
+            
+            if query_materials[selected_materials_query] != "":
+                prologue_text = prologue_text + "?Composition ?Material_Condition" 
+
+            if selected_materials_query == "Keyword Search":
+                custom_material = st.text_input("Enter material keyword:")
+                query_materials = {
+                
+                "Keyword Search":f"""
+
+            ?paper a cs:ColdSprayPaper ;
+                cs:hasMaterial ?material .
+            ?material cs:hasCondition ?Material_Condition ;
+                        cs:hasComposition ?Composition .
+
+            FILTER (regex(?Composition, "{custom_material}"))
+
+        """,
+                        }
+                
+                
+
+            selected_preprocessing_query = st.selectbox("Preprocessing", list(query_preprocessing.keys()))
+            coldspray_checkbox = st.checkbox("Cold Spray Details", value=False)
+            selected_characterization_query = st.selectbox("Characterization", list(query_characterization.keys()))
+
+            if query_preprocessing[selected_preprocessing_query] != """""":
+                prologue_text = prologue_text + "?Preprocessing_Method " 
+
+            if coldspray_checkbox:
+                prologue_text = prologue_text +  "?Process_Gas " + "?Gas_Pressure " + "?Gas_Temperature " + "?StandOff_Distance "   +  "?Particle_or_Impact_Velocity" 
+                coldspray_text = """Optional{?paper cs:hasColdSprayProcess ?process . 
+        Optional{?process cs:carrierGas ?Process_Gas .
+        ?process cs:gasPressure ?gasPressure .
+        ?process cs:gasPressureUnit ?gasPressureUnit .
+        BIND(CONCAT(STR(?gasPressure)," ", STR(?gasPressureUnit)) AS ?Gas_Pressure) . }
+        Optional{?process cs:nozzleTemperature ?nozzleTemperature .
+        ?process cs:nozzleTemperatureUnit ?nozzleTemperatureUnit.
+        BIND(CONCAT(STR(?nozzleTemperature)," ", STR(?nozzleTemperatureUnit)) AS ?Gas_Temperature) . }
+        Optional{?process cs:standOffDistance ?standOffDistance .
+        ?process cs:standOffDistanceUnit ?standOffDistanceUnit .
+        BIND(CONCAT(STR(?standOffDistance)," ", STR(?standOffDistanceUnit)) AS ?StandOff_Distance) . }
+            
+        
+        Optional{
+            ?paper cs:hasResult ?result .
+            ?result cs:hasMechanicalProperty ?mechProp .
+            ?mechProp cs:propertyName ?propName .
+            ?mechProp cs:propertyValue ?propVal .
+            ?mechProp cs:propertyUnit ?propUnit .
+            FILTER (REGEX(STR(?propName), "velocity", "i"))
+            BIND(CONCAT(STR(?propName), ": ", STR(?propVal)," ", STR(?propUnit)) AS ?Particle_or_Impact_Velocity) .
+            
+            }
+
+        Optional {?process cs:traverseVelocity ?velocity .
+            ?process cs:traverseVelocityUnit ?velocityUnit .
+
+            BIND(COALESCE(CONCAT("Traverse Velocity: ", STR(?velocity)," ", STR(?velocityUnit)), "NA") AS ?Particle_or_Impact_Velocity) .
+            }
+
+        
+            
+
+        }
+        """
+                
+            if query_characterization[selected_characterization_query] != """""":
+                prologue_text = prologue_text + "?Characterization_Method " 
+            
+            selected_mic_result_query = st.selectbox("Microstructure Results", ["None", "Grain Size", "Particle Size", "Deposition Efficiency", "Porosity", "Grain Boundary", "Roughness", "Corrosion Properties", "Fracture Morphology", "Deformation", "Keyword Search"])
+            if selected_mic_result_query != "None":
+                prologue_text = prologue_text + "?Microstructure_Parameter "
+                if selected_mic_result_query != "Keyword Search":
+
+                    query_mic_results = {"None":"""""",
+                    "Grain Size":"""
+                    
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMicrostructureResult ?microstructure .
+                        ?microstructure cs:featureDescription ?featureDescription .
+                        ?microstructure cs:featureValue ?featureValue.
+                        ?microstructure cs:featureUnit ?featureUnit.
+            
+                        FILTER (REGEX(STR(?featureDescription), "grain size", "i"))
+                        BIND(CONCAT(STR(?featureDescription), ": ", STR(?featureValue)," ", STR(?featureUnit)) AS ?Microstructure_Parameter) .
+                                """,
+                    "Particle Size":"""
+                    
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMicrostructureResult ?microstructure .
+                        ?microstructure cs:featureDescription ?featureDescription .
+                        ?microstructure cs:featureValue ?featureValue.
+                        ?microstructure cs:featureUnit ?featureUnit.
+            
+                        FILTER (REGEX(STR(?featureDescription), "particle size", "i"))
+                        BIND(CONCAT(STR(?featureDescription), ": ", STR(?featureValue)," ", STR(?featureUnit)) AS ?Microstructure_Parameter) .
+                        
+                                """,
+
+                    "Deposition Efficiency":"""
+                    
+                        ?paper a cs:ColdSprayPaper ;
+                        cs:hasResult ?result.
+                    ?result cs:depositionEfficiency ?microstructure .
+                    
+                    BIND(CONCAT("Deposition Efficiency: ", STR(?microstructure)," %") AS ?Microstructure_Parameter) .
+                            """,
+
+                    "Porosity":"""
+                        ?paper a cs:ColdSprayPaper ;
+                                cs:hasResult ?result .
+
+                        ?result cs:hasMicrostructureResult ?microstructure .
+
+                        OPTIONAL {
+                            ?result cs:porosity ?porosity ;
+                                    cs:porosityUnit ?porosityUnit .
+                        }
+
+                        OPTIONAL {
+                            ?microstructure cs:featureDescription ?featureDescription ;
+                                            cs:featureValue ?featureValue ;
+                                            cs:featureUnit ?featureUnit .
+                            FILTER(REGEX(STR(?featureDescription), "porosity", "i"))
+                        }
+
+                        
+                        BIND(
+                            IF(BOUND(?featureDescription),
+                            CONCAT(STR(?featureDescription), ": ", STR(?featureValue), " ", STR(?featureUnit)),
+                            ""
+                            ) AS ?MicrostructurePorosity
+                        )
+
+                        BIND(
+                            IF(BOUND(?porosity),
+                            CONCAT("Porosity: ", STR(?porosity), " ", STR(?porosityUnit)),
+                            ""
+                            ) AS ?csPorosity
+                        )
+
+                        BIND(CONCAT(?MicrostructurePorosity, " ", ?csPorosity) AS ?Microstructure_Parameter)
+
+                        
+                        FILTER(REGEX(?Microstructure_Parameter, "porosity", "i"))
+                                """,
+                    "Grain Boundary":"""
+                    
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result .
+
+                        ?result cs:hasMicrostructureResult ?microstructure .
+                        ?microstructure cs:featureDescription ?featureDescription .
+                        ?microstructure cs:featureValue ?featureValue .
+
+                        OPTIONAL { ?microstructure cs:featureUnit ?featureUnit }
+
+                        FILTER (REGEX(STR(?featureDescription), "grain boundary", "i"))
+
+                        BIND(
+                            CONCAT(
+                            STR(?featureDescription), ": ",
+                            STR(?featureValue),
+                            IF(BOUND(?featureUnit), CONCAT(" ", STR(?featureUnit)), "")
+                            ) AS ?Microstructure_Parameter
+                        )
+                                        """,
+                    "Roughness":"""
+                    
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMicrostructureResult ?microstructure .
+                        ?microstructure cs:featureDescription ?featureDescription .
+                        ?microstructure cs:featureValue ?featureValue.
+                        ?microstructure cs:featureUnit ?featureUnit.
+            
+                        FILTER (REGEX(STR(?featureDescription), "roughness", "i"))
+                        BIND(CONCAT(STR(?featureDescription), ": ", STR(?featureValue)," ", STR(?featureUnit)) AS ?Microstructure_Parameter) .
+                                """,
+                    "Corrosion Properties":"""
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result .
+
+                        ?result cs:hasMicrostructureResult ?microstructure .
+                        ?microstructure cs:featureDescription ?featureDescription .
+                        ?microstructure cs:featureValue ?featureValue .
+
+                        OPTIONAL { ?microstructure cs:featureUnit ?featureUnit }
+
+                        FILTER (REGEX(STR(?featureDescription), "corrosion|Icorr|Ecorr", "i"))
+
+                        BIND(
+                            CONCAT(
+                            STR(?featureDescription), ": ",
+                            STR(?featureValue),
+                            IF(BOUND(?featureUnit), CONCAT(" ", STR(?featureUnit)), "")
+                            ) AS ?Microstructure_Parameter
+                        )
+                                        """,
+                    "Fracture Morphology":"""
+                    
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result .
+
+                        ?result cs:hasMicrostructureResult ?microstructure .
+                        ?microstructure cs:featureDescription ?featureDescription .
+                        ?microstructure cs:featureValue ?featureValue .
+
+                        OPTIONAL { ?microstructure cs:featureUnit ?featureUnit }
+
+                        FILTER (REGEX(STR(?featureDescription), "fracture morphology", "i"))
+
+                        BIND(
+                            CONCAT(
+                            STR(?featureDescription), ": ",
+                            STR(?featureValue),
+                            IF(BOUND(?featureUnit), CONCAT(" ", STR(?featureUnit)), "")
+                            ) AS ?Microstructure_Parameter
+                        )
+                                        """,
+                    "Deformation":"""
+                    
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result .
+
+                        ?result cs:hasMicrostructureResult ?microstructure .
+                        ?microstructure cs:featureDescription ?featureDescription .
+                        ?microstructure cs:featureValue ?featureValue .
+
+                        OPTIONAL { ?microstructure cs:featureUnit ?featureUnit }
+
+                        FILTER (REGEX(STR(?featureDescription), "deformation", "i"))
+
+                        BIND(
+                            CONCAT(
+                            STR(?featureDescription), ": ",
+                            STR(?featureValue),
+                            IF(BOUND(?featureUnit), CONCAT(" ", STR(?featureUnit)), "")
+                            ) AS ?Microstructure_Parameter
+                        )
+                                        """,
+                        }
+                else:
+                    custom_mic = st.text_input("Enter a keyword for a microstructure parameter (e.g., texture, lattice strain, volume fraction):")
+                    query_mic_results = {"Keyword Search":f"""
+                            ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result .
+
+                        ?result cs:hasMicrostructureResult ?microstructure .
+                        ?microstructure cs:featureDescription ?featureDescription .
+                        ?microstructure cs:featureValue ?featureValue .
+
+                        OPTIONAL {{ ?microstructure cs:featureUnit ?featureUnit }}
+
+                        FILTER (REGEX(STR(?featureDescription), "{custom_mic}", "i"))
+
+                        BIND(
+                            CONCAT(
+                            STR(?featureDescription), ": ",
+                            STR(?featureValue),
+                            IF(BOUND(?featureUnit), CONCAT(" ", STR(?featureUnit)), "")
+                            ) AS ?Microstructure_Parameter
+                        )
+                                        """,
+                                        }
+                    #custom_results = st.text_input("Enter Result keyword:")
+                    
+            
+            
+                    
+
+                    
+                #st.write(query_results[selected_result_query])
+            else:
+                query_mic_results = {"None":"""""",}
+                
+
+            
+
+            
+
+            #"?Particle_Size_Evaluation" + "Particle_Size_Value" +    
+
+            #if query_results[selected_result_query] != """""":
+            #    prologue_text = prologue_text + "?propertyName " + "?propertyValue " + "?propertyUnit" 
+
+            selected_mech_result_query = st.selectbox("Mechanical Property Results", ["None", "Hardness", "Tensile Strength", "Yield Strength", "Bonding Strength", "Elastic Modulus", "Wear Properties", "Ductility", "Residual Stress", "Keyword Search"])
+            if selected_mech_result_query != "None":
+                prologue_text = prologue_text + "?Mechanical_Property "
+                if selected_mech_result_query != "Keyword Search": 
+                    
+                    query_mech_results = {"None":"""""",
+                    "Hardness":"""
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMechanicalProperty ?mechanical .
+                        ?mechanical cs:propertyName ?propertyName .
+                        ?mechanical cs:propertyValue ?propertyValue.
+                        ?mechanical cs:propertyUnit ?propertyUnit.
+            
+                        FILTER (REGEX(STR(?propertyName), "hardness", "i"))
+                        BIND(CONCAT(STR(?propertyName), ": ", STR(?propertyValue)," ", STR(?propertyUnit)) AS ?Mechanical_Property) .
+                    """,
+                    "Tensile Strength":"""
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMechanicalProperty ?mechanical .
+                        ?mechanical cs:propertyName ?propertyName .
+                        ?mechanical cs:propertyValue ?propertyValue.
+                        ?mechanical cs:propertyUnit ?propertyUnit.
+            
+                        FILTER (REGEX(STR(?propertyName), "tensile", "i"))
+                        BIND(CONCAT(STR(?propertyName), ": ", STR(?propertyValue)," ", STR(?propertyUnit)) AS ?Mechanical_Property) .
+                    """,
+                    "Yield Strength":"""
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMechanicalProperty ?mechanical .
+                        ?mechanical cs:propertyName ?propertyName .
+                        ?mechanical cs:propertyValue ?propertyValue.
+                        ?mechanical cs:propertyUnit ?propertyUnit.
+            
+                        FILTER (REGEX(STR(?propertyName), "yield", "i"))
+                        BIND(CONCAT(STR(?propertyName), ": ", STR(?propertyValue)," ", STR(?propertyUnit)) AS ?Mechanical_Property) .
+                    """,
+                    "Bonding Strength":"""
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMechanicalProperty ?mechanical .
+                        ?mechanical cs:propertyName ?propertyName .
+                        ?mechanical cs:propertyValue ?propertyValue.
+                        ?mechanical cs:propertyUnit ?propertyUnit.
+            
+                        FILTER (REGEX(STR(?propertyName), "bond|shear|cohesive|adhesion", "i"))
+                        BIND(CONCAT(STR(?propertyName), ": ", STR(?propertyValue)," ", STR(?propertyUnit)) AS ?Mechanical_Property) .
+                    """,
+                    "Elastic Modulus":"""
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMechanicalProperty ?mechanical .
+                        ?mechanical cs:propertyName ?propertyName .
+                        ?mechanical cs:propertyValue ?propertyValue.
+                        ?mechanical cs:propertyUnit ?propertyUnit.
+            
+                        FILTER (REGEX(STR(?propertyName), "elastic modulus|young's modulus", "i"))
+                        BIND(CONCAT(STR(?propertyName), ": ", STR(?propertyValue)," ", STR(?propertyUnit)) AS ?Mechanical_Property) .
+                    """,
+                    "Wear Properties":"""
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMechanicalProperty ?mechanical .
+                        ?mechanical cs:propertyName ?propertyName .
+                        ?mechanical cs:propertyValue ?propertyValue.
+                        ?mechanical cs:propertyUnit ?propertyUnit.
+            
+                        FILTER (REGEX(STR(?propertyName), "wear", "i"))
+                        BIND(CONCAT(STR(?propertyName), ": ", STR(?propertyValue)," ", STR(?propertyUnit)) AS ?Mechanical_Property) .
+                    """,
+                    "Ductility":"""
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMechanicalProperty ?mechanical .
+                        ?mechanical cs:propertyName ?propertyName .
+                        ?mechanical cs:propertyValue ?propertyValue.
+                        ?mechanical cs:propertyUnit ?propertyUnit.
+            
+                        FILTER (REGEX(STR(?propertyName), "ductility|elongation", "i"))
+                        BIND(CONCAT(STR(?propertyName), ": ", STR(?propertyValue)," ", STR(?propertyUnit)) AS ?Mechanical_Property) .
+                    """,
+                    "Residual Stress":"""
+                        ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result.
+                        ?result cs:hasMechanicalProperty ?mechanical .
+                        ?mechanical cs:propertyName ?propertyName .
+                        ?mechanical cs:propertyValue ?propertyValue.
+                        ?mechanical cs:propertyUnit ?propertyUnit.
+            
+                        FILTER (REGEX(STR(?propertyName), "residual stress", "i"))
+                        BIND(CONCAT(STR(?propertyName), ": ", STR(?propertyValue)," ", STR(?propertyUnit)) AS ?Mechanical_Property) .
+                    """,
+                    }
+
+                else:
+                    custom_mech = st.text_input("Enter a keyword for a mechanical property (e.g., thermal stress, strain at fracture, deposition stress):")
+                    query_mech_results = {"Keyword Search":f"""
+                                            ?paper a cs:ColdSprayPaper ;
+                            cs:hasResult ?result .
+
+                        ?result cs:hasMechanicalProperty ?mechanical .
+                        ?mechanical cs:propertyName ?propertyName .
+                        ?mechanical cs:propertyValue ?propertyValue .
+
+                        OPTIONAL {{ ?mechanical cs:propertyUnit ?propertyUnit }}
+
+                        FILTER (REGEX(STR(?propertyName), "{custom_mech}", "i"))
+
+                        BIND(
+                            CONCAT(
+                            STR(?propertyName), ": ",
+                            STR(?propertyValue),
+                            IF(BOUND(?propertyUnit), CONCAT(" ", STR(?propertyUnit)), "")
+                            ) AS ?Mechanical_Property
+                        )
+                                            """,
+                                        
+                                        }
+                    
+
+            else:
+                query_mech_results = {"None":"""""",}    
+                
+
+
+            #if selected_result_query == "Microstructure":
+            #        prologue_text = prologue_text + "?featureDescription " + "?featureValue " + "?featureUnit" 
+
+    elif paper_type == "Numerical":
+        numerical_query = """
+
+                ?paper a cs:ColdSprayPaper ;
+                    cs:hasComputationalStudy ?x .
+
+                """
+        with st.expander(f"#### Advanced Search", expanded = True):
+            selected_model_materials_query = st.selectbox("Model Material", ["any", "Aluminum and Aluminum Alloys", "Copper and Copper Alloys", "Nickel and Nickel Alloys", "Titanium and Titanium Alloys", "Iron and Steel Alloys", "Magnesium and Magnesium Alloys", "Carbides", "Keyword Search"]) 
+
+            if query_model_materials[selected_model_materials_query] != "":
+                prologue_text = prologue_text + "?Model_Material" 
+
+            if selected_model_materials_query == "Keyword Search":
+                custom_model_material = st.text_input("Enter material keyword:")
+                query_model_materials = {
+                
+                "Keyword Search":f"""
+
+            ?paper a cs:ColdSprayPaper ;
+                cs:hasComputationalStudy ?comp .
+            ?comp cs:modelsMaterial ?Model_Material .
+
+            FILTER (regex(?Model_Material, "{custom_model_material}"))
+
+        """,
+                        }
+            approachcol1, approachcol2 = st.columns([1.2, 3])
+            with approachcol1:
+                approach_check = st.checkbox("Numerical Approach", value = True)
+            with approachcol2:
+                custom_approach_type = st.text_input("", label_visibility="collapsed", placeholder="Leave blank to show all, or enter a numerical approach")
+            if approach_check:
+                prologue_text = prologue_text + "?Numerical_Approach"
+
+                if custom_approach_type == "":
+                    approach_query = """
+                    OPTIONAL{
+                    ?paper a cs:ColdSprayPaper ;
+                        cs:hasComputationalStudy ?approach .
+                    ?approach cs:hasNumericalApproach ?approach2 .
+                    ?approach2 cs:approachType ?Numerical_Approach .
+                    }
+                    """
+                else:
+                    approach_query = f"""
+                    
+                    ?paper a cs:ColdSprayPaper ;
+                        cs:hasComputationalStudy ?approach .
+                    ?approach cs:hasNumericalApproach ?approach2 .
+                    ?approach2 cs:approachType ?Numerical_Approach .
+
+                    FILTER (REGEX(STR(?Numerical_Approach), "{custom_approach_type}", "i"))
+                    
+                    """
+
+            conscol1, conscol2 = st.columns([1.2, 3])
+            with conscol1:
+                cons_check = st.checkbox("Constitutive Model", value = True)
+            with conscol2:
+                custom_cons = st.text_input("", label_visibility="collapsed", placeholder="Leave blank to show all, or enter a constitutive model")
+            if cons_check:
+                prologue_text = prologue_text + "?Constitutive_Model"
+
+                if custom_cons == "":
+                    cons_query = """
+                    OPTIONAL{
+                    ?paper a cs:ColdSprayPaper ;
+                        cs:hasComputationalStudy ?cons .
+                    ?cons cs:hasNumericalApproach ?cons2 .
+                    ?cons2 cs:hasApproachDetail ?cons3 .
+                    ?cons3 cs:constitutiveModel ?Constitutive_Model .
+                    }
+                    """
+                else:
+                    cons_query = f"""
+                    
+                    ?paper a cs:ColdSprayPaper ;
+                        cs:hasComputationalStudy ?cons .
+                    ?cons cs:hasNumericalApproach ?cons2 .
+                    ?cons2 cs:hasApproachDetail ?cons3 .
+                    ?cons3 cs:constitutiveModel ?Constitutive_Model .
+
+                    FILTER (REGEX(STR(?Constitutive_Model), "{custom_cons}", "i"))
+                    
+                    """
+
+            
+            dimcol1, dimcol2 = st.columns([1.2, 3])
+            with dimcol1:
+                dim_check = st.checkbox("Dimensionality", value = True)
+            with dimcol2:
+                dim_select = st.selectbox("", ["all", "1D", "2D", "3D"], label_visibility = "collapsed")
+            if dim_check:
+                prologue_text = prologue_text + "?Dimensionality"
+                if dim_select == "all":
+                    dim_query = """
+                    OPTIONAL{
+                    ?paper a cs:ColdSprayPaper ;
+                        cs:hasComputationalStudy ?dim .
+                    ?dim cs:hasNumericalApproach ?dim2 .
+                    ?dim2 cs:dimensionality ?Dimensionality .
+                    }
+                    """
+                else:
+                    dim_query = f"""
+                    
+                    ?paper a cs:ColdSprayPaper ;
+                        cs:hasComputationalStudy ?dim .
+                    ?dim cs:hasNumericalApproach ?dim2 .
+                    ?dim2 cs:dimensionality ?Dimensionality .
+
+                    FILTER (regex(?Dimensionality, "{dim_select}"))
+                    
+                    """
+
+            softcol1, softcol2 = st.columns([1.2, 3])
+            with softcol1:
+                soft_check = st.checkbox("Software", value = True)
+            with softcol2:
+                custom_soft = st.text_input("", label_visibility="collapsed", placeholder="Leave blank to show all, or enter a software")
+            if soft_check:
+                prologue_text = prologue_text + "?Software"
+
+                if custom_soft == "":
+                    soft_query = """
+                    OPTIONAL{
+                    ?paper a cs:ColdSprayPaper ;
+                        cs:hasComputationalStudy ?soft .
+                    ?soft cs:usesSoftware ?Software .
+                    }
+                    """
+                else:
+                    soft_query = f"""
+                    
+                    ?paper a cs:ColdSprayPaper ;
+                        cs:hasComputationalStudy ?soft .
+                    ?soft cs:usesSoftware ?Software .
+
+                    FILTER (REGEX(STR(?Software), "{custom_soft}", "i"))
+                    
+                    """
+
+            meshcol1, meshcol2 = st.columns([1.2, 3])
+            with meshcol1:
+                mesh_check = st.checkbox("Mesh Resolution", value = True)
+            if mesh_check:
+                prologue_text = prologue_text + "?Mesh_Resolution"
+
+                mesh_query = """
+                OPTIONAL{
+                ?paper a cs:ColdSprayPaper ;
+                    cs:hasComputationalStudy ?mesh .
+                ?mesh cs:hasNumericalApproach ?mesh2 .
+                ?mesh2 cs:hasApproachDetail ?mesh3 .
+                ?mesh3 cs:meshResolution ?Mesh_Resolution .
+                }
+                """
+
+            constantcol1, constantcol2 = st.columns([1.2, 3])
+            with constantcol1:
+                constant_check = st.checkbox("Model Constants", value = False)
+            if constant_check:
+                prologue_text = prologue_text + "?Model_Constant " + "?Model_Constant_Source"
+
+                constant_query = """
+                OPTIONAL{
+                ?paper a cs:ColdSprayPaper ;
+                    cs:hasComputationalStudy ?const .
+                ?const cs:hasNumericalApproach ?const2 .
+                ?const2 cs:hasApproachDetail ?const3 .
+                ?const3 cs:hasModelingConstant ?const4 .
+                ?const4 cs:parameterName ?constpara .
+                ?const4 cs:parameterValue ?constval .
+                ?const4 cs:parameterUnit ?constunit .
+                OPTIONAL{
+                ?const4 cs:derivedFromSourceTitle ?Model_Constant_Source .
+                }
+                BIND(
+                CONCAT(
+                STR(?constpara), ": ",
+                STR(?constval),
+                IF(BOUND(?constunit), CONCAT(" ", STR(?constunit)), "")
+                ) AS ?Model_Constant
+                )
+                }
+                """
+
+                     
+
+
+
+    title_text = """
+    ?paper a cs:ColdSprayPaper ;
+         cs:hasDOI ?nDOI ;
+         cs:hasMetadata ?metadata .
+         BIND(CONCAT("https://doi.org/", STR(?nDOI)) AS ?DOI) .
+         
+         
+  ?metadata a cs:Metadata ;
+            cs:hasTitle ?Title ;
+            cs:hasPublicationYear ?Year .
+  """
+    if custom_author_query != "":
+            prologue_text = prologue_text + "?Author "
+            author_query = f"""
+            ?metadata a cs:Metadata ;
+                cs:hasAuthor ?Author .
+            FILTER (regex(?Author, "{custom_author_query}", "i"))    
+
+            """
+
+    if custom_doi_query != "":
+        title_text = title_text + "\n" + f"""FILTER (REGEX(STR(?DOI), "{custom_doi_query}"))"""
+
+    query_text = prologue_text + "\n WHERE {" + title_text + author_query + experimental_query + query_materials[selected_materials_query] + query_preprocessing[selected_preprocessing_query] + coldspray_text + query_characterization[selected_characterization_query] + query_mic_results[selected_mic_result_query] + query_mech_results[selected_mech_result_query] + numerical_query + query_model_materials[selected_model_materials_query]  + approach_query + dim_query + cons_query + soft_query + mesh_query + constant_query + "}" + "\n" + "ORDER BY DESC(?Year)"
+    #+ query_approach_type[selected_approach_type_query]
+    if st.button("Run Query"):
+        with st.spinner("Querying the database, large or complex queries may take longer...", show_time = False):
+            df = run_query(g, query_text)
+            #st.dataframe(df)
+            
+            df_display = df.copy()
+            if custom_author_query != "":
+                df_display.loc[df_display.duplicated(subset=["Year", "DOI", "Title", "Author"]), ["Year","DOI", "Title", "Author"]] = ""
+            else:    
+                df_display.loc[df_display.duplicated(subset=["Year", "DOI", "Title"]), ["Year","DOI", "Title"]] = ""
+            #st.dataframe(df_display, use_container_width=True)
+            df_display.insert(0, " ", "")
+            row_numbers = (~df_display["DOI"].eq("")).cumsum()  # count only when DOI not blank
+            df_display.loc[df_display["DOI"] != "", " "] = row_numbers[df_display["DOI"] != ""].astype(str)
+            st.data_editor(
+                df_display,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "DOI": st.column_config.TextColumn(width="medium"),
+                    "Title": st.column_config.TextColumn(width="large"),
+                },
+                disabled=True,  # makes it behave like dataframe
+            )
+
+            #group_keys = ["DOI", "Title"]
+            #value_columns = [c for c in df.columns if c not in group_keys]
+            #agg_rules = {col: lambda x: ", ".join(sorted(set(map(str, x.dropna())))) for col in value_columns}
+            #grouped = df.groupby(group_keys).agg(agg_rules).reset_index()
+            #st.dataframe(grouped)
+        
+    #st.markdown("---")
+    #with st.expander("Custom Query"):
+    #    st.markdown("The selections above generated the SPARQL query below. You may modify it or enter your own custom SPARQL query.")
+    #    st.code(query_text, language="sparql")
+
+    #custom_query = st.text_area("Enter your SPARQL Query here", height=200)
+    #if st.button("Run Custom Query"):
+    #    try:
+    #        df = run_query(g, custom_query)
+    #        st.dataframe(df)
+    #    except Exception as e:
+    #        st.error(f"Query failed: {e}")
+        #st.subheader("Query")
+
+
+    
