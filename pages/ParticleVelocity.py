@@ -54,7 +54,7 @@ st.markdown("""
 
 
 # Optional: Top navigation using st.page_link
-col1, col2, col3, col4, col5 = st.columns([1.15, 3.1, 3.25, 2.1,2.1])
+col1, col2, col3, col4 = st.columns([1.15, 3.1, 3.25, 2.1])
 with col1:
     st.page_link("main.py", label= "Database")
 
@@ -67,8 +67,6 @@ with col3:
 with col4:
     st.page_link("pages/Submit.py", label="Your Contribution")
 
-with col5:
-    st.page_link("pages/Contact.py", label="Contact Us")
 
 
 st.image(uni_path, width=600, output_format="auto")
