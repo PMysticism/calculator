@@ -56,7 +56,7 @@ st.markdown("""
 # Optional: Top navigation using st.page_link
 col1, col2, col3, col4, col5 = st.columns([1.15, 3.1, 3.25, 2.1,2.1])
 with col1:
-    st.page_link("Home.py", label= "Database")
+    st.page_link("main.py", label= "Database")
 
 with col2:
     st.page_link("pages/Calculator.py", label="Critical Velocity Calculator")
