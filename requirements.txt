@@ -5,3 +5,4 @@ SPARQLWrapper
 pandas
 rdflib
 scipy
+sympy
